@@ -4,19 +4,24 @@ import { Badge, IconButton } from "@material-ui/core";
 import { ShoppingBasket } from "@material-ui/icons";
 import { Link } from "@material-ui/core";
 import { useUserContext } from "../context/user_context";
+import { useProductsContext } from "../context/products_context";
 import styled from "styled-components";
 const Navbar = () => {
   const { user, loginWithRedirect, logout } = useUserContext();
+  const { cart, modalOpen, setModalOpen } = useProductsContext();
 
   return (
     <Wrapper>
       <h1 style={{ marginLeft: "1rem" }}>ZanziFood 🍕</h1>
       <div style={{ display: "flex", alignItems: "center" }}>
-        <IconButton aria-label="show cart items" component={Link} to="/order">
-          <Badge badgeContent={2} style={{ color: "white" }}>
-            <ShoppingBasket style={{ color: "white" }} />
+        <button onClick={() => setModalOpen(true)}>
+          <Badge badgeContent={cart.total_items} style={{ color: "white" }}>
+            <ShoppingBasket
+              style={{ color: "white" }}
+              onClick={() => setModalOpen(true)}
+            />
           </Badge>
-        </IconButton>
+        </button>
         {!user && (
           <button onClick={loginWithRedirect} type="button">
             <span

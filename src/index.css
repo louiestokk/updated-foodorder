@@ -24,6 +24,10 @@ button {
 }
 button:hover {
   transform: scale(1.1);
+  transition: all 0.3s linear;
+}
+li {
+  list-style-type: none;
 }
 nav {
   background: var(--mainColor);
@@ -45,4 +49,11 @@ nav {
   height: 100px;
   background-size: cover;
   background-position: center;
+}
+.modal {
+  transform: translateX(-150%);
+  transition: all 0.3s linear;
+}
+.show-modal {
+  transform: translateX(0%);
 }
