@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { FaBars } from "react-icons/fa";
-
 import { useProductsContext } from "../../context/products_context";
 import Modal from "../Modal";
 const Products = () => {
@@ -16,7 +15,7 @@ const Products = () => {
   } = useProductsContext();
 
   return (
-    <Wrapper>
+    <Wrapper className={modalOpen ? "open back" : "back"}>
       <div className="container">
         <div className="area">
           <h4>Area</h4>
@@ -177,7 +176,7 @@ const Wrapper = styled.section`
     background: white;
     z-index: 99;
     color: black;
-    top: calc(30%);
+    top: calc(0%);
     box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
     border-radius: 5px 5px;
   }

@@ -38,9 +38,6 @@ const Navbar = () => {
           </div>
         )}
       </div>
-      <div className="user">
-        <h4>test</h4>
-      </div>
     </Wrapper>
   );
 };

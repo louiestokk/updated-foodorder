@@ -1,8 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { AiFillCloseCircle } from "react-icons/ai";
 import { useProductsContext } from "../context/products_context";
+import Checkout from "../pages/Checkout";
+import { useUserContext } from "../context/user_context";
 const Modal = () => {
+  const { user, loginWithRedirect } = useUserContext();
+  const [show, setShow] = useState(false);
   const {
     sides,
     handleAddToCart,
@@ -86,8 +90,18 @@ const Modal = () => {
           </p>
         </div>
 
-        <button className="pay-btn">Pay ${cart.subtotal.raw + 2.5}</button>
+        {user && (
+          <button className="pay-btn" onClick={() => setShow(!show)}>
+            Pay ${cart.subtotal.raw + 2.5}
+          </button>
+        )}
+        {!user && (
+          <button className="pay-btn" onClick={loginWithRedirect}>
+            Login
+          </button>
+        )}
       </div>
+      {show && <Checkout />}
     </Wrapper>
   );
 };
