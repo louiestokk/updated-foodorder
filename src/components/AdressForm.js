@@ -6,7 +6,7 @@ import emailjs from "@emailjs/browser";
 import { init } from "@emailjs/browser";
 init("user_a9rRSeZcRVhTLpSYxEfo8");
 
-const AdressForm = ({ setActiveStep }) => {
+const AdressForm = ({ setActiveStep, contact, setContact, sendOrderData }) => {
   const form = useRef();
   const sendEmail = (e) => {
     e.preventDefault();
@@ -14,14 +14,39 @@ const AdressForm = ({ setActiveStep }) => {
   return (
     <Wrapper>
       <form onSubmit={sendEmail} ref={form}>
-        <input type="text" name="name" required placeholder="Name" />
-        <input type="text" name="address" required placeholder="Address" />
-        <input type="text" name="area" placeholder="Area: ex: Paje" required />
-        <input type="text" name="number" required placeholder="+255" />
+        <input
+          type="text"
+          name="name"
+          required
+          placeholder="Name"
+          onChange={(e) => setContact({ ...contact, name: e.target.value })}
+        />
+        <input
+          type="text"
+          name="address"
+          required
+          placeholder="Address"
+          onChange={(e) => setContact({ ...contact, address: e.target.value })}
+        />
+        <input
+          type="text"
+          name="area"
+          placeholder="Area: ex: Paje"
+          required
+          onChange={(e) => setContact({ ...contact, area: e.target.value })}
+        />
+        <input
+          type="text"
+          name="number"
+          required
+          placeholder="+255"
+          onChange={(e) => setContact({ ...contact, phone: e.target.value })}
+        />
         <button
           type="submit"
           onClick={() => {
             setActiveStep(1);
+            sendOrderData();
           }}
         >
           Next <MdKeyboardArrowRight className="icon" />
