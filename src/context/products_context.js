@@ -9,6 +9,7 @@ const ProductsProvider = ({ children }) => {
   const [categories, setCategories] = useState([]);
   const [cart, setCart] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
+  const [error, setError] = useState(false);
   const fetchProducts = async (query) => {
     try {
       setLoading(true);
@@ -19,6 +20,7 @@ const ProductsProvider = ({ children }) => {
       setLoading(false);
     } catch (error) {
       console.log(error);
+      setError(true);
     }
   };
   const fetchCategories = async () => {
@@ -37,6 +39,7 @@ const ProductsProvider = ({ children }) => {
   };
   const handleAddToCart = async (productId, quantity) => {
     const { cart } = await commerce.cart.add(productId, quantity);
+    // display that item is added
     setCart(cart);
   };
   const fetchCart = async () => {
@@ -66,6 +69,8 @@ const ProductsProvider = ({ children }) => {
         modalOpen,
         setModalOpen,
         fetchProducts,
+        loading,
+        error,
       }}
     >
       {children}

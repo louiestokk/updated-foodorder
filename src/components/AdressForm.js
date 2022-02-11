@@ -2,18 +2,15 @@ import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { MdKeyboardArrowLeft } from "react-icons/md";
-import emailjs from "@emailjs/browser";
-import { init } from "@emailjs/browser";
-init("user_a9rRSeZcRVhTLpSYxEfo8");
+import { useUserContext } from "../context/user_context";
 
 const AdressForm = ({ setActiveStep, contact, setContact, sendOrderData }) => {
+  const { user } = useUserContext();
   const form = useRef();
-  const sendEmail = (e) => {
-    e.preventDefault();
-  };
+
   return (
     <Wrapper>
-      <form onSubmit={sendEmail} ref={form}>
+      <form ref={form}>
         <input
           type="text"
           name="name"
@@ -42,6 +39,7 @@ const AdressForm = ({ setActiveStep, contact, setContact, sendOrderData }) => {
           placeholder="+255"
           onChange={(e) => setContact({ ...contact, phone: e.target.value })}
         />
+
         <button
           type="submit"
           onClick={() => {

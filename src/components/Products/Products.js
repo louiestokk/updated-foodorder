@@ -3,6 +3,9 @@ import styled from "styled-components";
 import { FaBars } from "react-icons/fa";
 import { useProductsContext } from "../../context/products_context";
 import Modal from "../Modal";
+
+import { Oval } from "react-loader-spinner";
+
 const Products = () => {
   const {
     products,
@@ -12,6 +15,8 @@ const Products = () => {
     modalOpen,
     setModalOpen,
     fetchProducts,
+    loading,
+    error,
   } = useProductsContext();
 
   return (
@@ -43,6 +48,7 @@ const Products = () => {
         </div>
         <div className="categories">
           {categories.map((el, ind) => {
+            if (el === "Jambiani" || el === "Paje") return;
             return (
               <button
                 type="button"
@@ -66,6 +72,10 @@ const Products = () => {
       >
         Food
       </h2>
+      {loading && (
+        <Oval heigth="100" width="100" color="grey" ariaLabel="loading" />
+      )}
+      {error && <h4>Something whent wrong, reload the page</h4>}
       <div className="products">
         {products.map((product) => {
           return (
@@ -103,6 +113,7 @@ export default Products;
 const Wrapper = styled.section`
   width: 100%;
   height: 100%;
+  margin: 0 auto;
 
   .area {
     display: flex;
@@ -121,6 +132,7 @@ const Wrapper = styled.section`
     background: #f44336;
     height: 200px;
     width: 96%;
+    max-width: 700px;
     border-radius: 5px 5px;
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
     overflow: hidden;
@@ -166,6 +178,7 @@ const Wrapper = styled.section`
     height: 1.8rem;
     border-radius: 5px 5px;
     margin-top: 0.5rem;
+    margin-right: 0.2rem;
     color: #f44336;
     letter-spacing: 1px;
   }
@@ -200,10 +213,9 @@ const Wrapper = styled.section`
   }
   @media screen and (max-width: 500px) {
     .prod-img {
-      width: 400px;
+      width: 380px;
     }
     .cat-btn {
-      margin-right: 0.1rem;
       width: 5rem;
       font-size: 0.8rem;
       margin-left: 0.1rem;

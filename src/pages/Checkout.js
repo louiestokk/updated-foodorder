@@ -45,7 +45,7 @@ const Checkout = () => {
       },
       order: cart.line_items,
       amount: {
-        order: 47,
+        order: cart.subtotal.raw,
         delivery_fee: 2.5,
       },
     });

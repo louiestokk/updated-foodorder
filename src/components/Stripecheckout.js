@@ -76,6 +76,7 @@ const CheckoutForm = () => {
       setError(null);
       setProccessing(true);
       setSucceeded(true);
+      // send corfirm email and order
       setTimeout(() => {
         navigate(0);
       }, 7000);
