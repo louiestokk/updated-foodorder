@@ -4,7 +4,7 @@ import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import SingelRestaurant from "./components/Restaurant/SingelRestaurant/SingelRestaurant";
-import Connect from "./components/AddRestaurant/Connect";
+import Connect from "./pages/Connect";
 function App() {
   return (
     <Router>

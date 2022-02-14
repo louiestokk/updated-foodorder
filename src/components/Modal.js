@@ -108,7 +108,7 @@ const Modal = () => {
 
 export default Modal;
 const Wrapper = styled.div`
-  position: relative;
+  position: absolute;
   color: black;
 
   section {

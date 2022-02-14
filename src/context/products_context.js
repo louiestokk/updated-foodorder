@@ -1,8 +1,11 @@
 import React, { useState, useContext, useEffect } from "react";
 import { commerce } from "../lib/commerce";
+import { restaurants } from "../utils/data";
+
 const ProductsContext = React.createContext();
 
 const ProductsProvider = ({ children }) => {
+  const [business, setBusiness] = useState(restaurants);
   const [products, setProducts] = useState([]);
   const [sides, setSides] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -71,6 +74,8 @@ const ProductsProvider = ({ children }) => {
         fetchProducts,
         loading,
         error,
+        business,
+        setBusiness,
       }}
     >
       {children}

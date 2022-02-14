@@ -1,27 +1,30 @@
 import React from "react";
 import { FaUserAlt } from "react-icons/fa";
-import { Badge, IconButton } from "@material-ui/core";
+import { Badge } from "@material-ui/core";
 import { ShoppingBasket } from "@material-ui/icons";
-import { Link } from "@material-ui/core";
+import { useLocation } from "react-router-dom";
 import { useUserContext } from "../context/user_context";
 import { useProductsContext } from "../context/products_context";
 import styled from "styled-components";
 const Navbar = () => {
   const { user, loginWithRedirect, logout } = useUserContext();
   const { cart, modalOpen, setModalOpen } = useProductsContext();
-
+  const location = useLocation();
   return (
     <Wrapper>
       <h1 style={{ marginLeft: "1rem" }}>ZanziFood 🍕</h1>
       <div style={{ display: "flex", alignItems: "center" }}>
-        <button onClick={() => setModalOpen(true)}>
-          <Badge badgeContent={cart.total_items} style={{ color: "white" }}>
-            <ShoppingBasket
-              style={{ color: "white" }}
-              onClick={() => setModalOpen(true)}
-            />
-          </Badge>
-        </button>
+        {location.pathname !== "/" && (
+          <button onClick={() => setModalOpen(true)}>
+            <Badge badgeContent={cart.total_items} style={{ color: "white" }}>
+              <ShoppingBasket
+                style={{ color: "white" }}
+                onClick={() => setModalOpen(true)}
+              />
+            </Badge>
+          </button>
+        )}
+
         {!user && (
           <button onClick={loginWithRedirect} type="button">
             <span

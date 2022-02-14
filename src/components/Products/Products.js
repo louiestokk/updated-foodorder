@@ -17,7 +17,7 @@ const Products = () => {
     loading,
     error,
   } = useProductsContext();
-
+  console.log(products);
   return (
     <Wrapper className={modalOpen ? "open back" : "back"}>
       <div className="container">
