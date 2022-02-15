@@ -1,5 +1,4 @@
 import React from "react";
-import Products from "../components/Products/Products";
 import Restaurants from "../components/Restaurant/Restaurants";
 import styled from "styled-components";
 import { useUserContext } from "../context/user_context";

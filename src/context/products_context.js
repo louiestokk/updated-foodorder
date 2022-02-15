@@ -13,6 +13,7 @@ const ProductsProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [error, setError] = useState(false);
+  const [added, setAdded] = useState(false);
   const fetchProducts = async (query) => {
     try {
       setLoading(true);
@@ -42,8 +43,8 @@ const ProductsProvider = ({ children }) => {
   };
   const handleAddToCart = async (productId, quantity) => {
     const { cart } = await commerce.cart.add(productId, quantity);
-    // display that item is added
     setCart(cart);
+    setAdded(true);
   };
   const fetchCart = async () => {
     const resp = await commerce.cart.retrieve();
@@ -52,6 +53,10 @@ const ProductsProvider = ({ children }) => {
   const handleUpdateCartQty = async (productId, quantity) => {
     const { cart } = await commerce.cart.update(productId, { quantity });
     setCart(cart);
+  };
+  const refreshCart = async () => {
+    const newCart = await commerce.cart.refresh();
+    setCart(newCart);
   };
   useEffect(() => {
     fetchProducts("All");
@@ -76,6 +81,9 @@ const ProductsProvider = ({ children }) => {
         error,
         business,
         setBusiness,
+        refreshCart,
+        added,
+        setAdded,
       }}
     >
       {children}

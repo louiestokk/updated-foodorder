@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { FaBars } from "react-icons/fa";
 import { useProductsContext } from "../../context/products_context";
-import Modal from "../Modal";
+import Modal from "../Cart";
 import { Oval } from "react-loader-spinner";
 
 const Products = () => {

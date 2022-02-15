@@ -1,16 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useProductsContext } from "../../../context/products_context";
 import { restaurants } from "../../../utils/data";
 import { BsFillInfoCircleFill } from "react-icons/bs";
 import { BsFillStarFill } from "react-icons/bs";
-import { FaPizzaSlice } from "react-icons/fa";
 import { MdRestaurantMenu } from "react-icons/md";
-import Modal from "../../Modal";
+
 const SingelRestaurant = () => {
-  const { products, handleAddToCart, modalOpen, setModalOpen } =
-    useProductsContext();
+  const { products, handleAddToCart, added, setAdded } = useProductsContext();
   const { id } = useParams();
 
   return (
@@ -39,6 +37,7 @@ const SingelRestaurant = () => {
               image,
               type,
               deliverfee,
+              category,
               icon,
               mainImage,
             } = rest;
@@ -81,10 +80,10 @@ const SingelRestaurant = () => {
                     alignItems: "center",
                   }}
                 >
-                  <FaPizzaSlice
-                    style={{ opacity: "0.6", marginRight: "0.4rem" }}
-                  />
-                  <p style={{ fontSize: "0.8rem" }}>. Pizza </p>
+                  <p style={{ opacity: "0.6", marginRight: "0.4rem" }}>
+                    {icon}
+                  </p>
+                  <p style={{ fontSize: "0.8rem" }}>. {category[0]} </p>
                 </div>
 
                 <div className="divider"></div>
@@ -99,6 +98,9 @@ const SingelRestaurant = () => {
                   <MdRestaurantMenu /> Menu
                 </h4>
                 <div className="menu">
+                  {added && (
+                    <h4 className="added-text">Item added to your food bag</h4>
+                  )}
                   {products
                     .filter((el) => menu.includes(el.id))
                     .map((el) => {
@@ -107,8 +109,10 @@ const SingelRestaurant = () => {
                           key={el.id}
                           className="menu-items"
                           onClick={() => {
-                            setModalOpen(!modalOpen);
                             handleAddToCart(el.id, 1);
+                            setTimeout(() => {
+                              setAdded(false);
+                            }, 6000);
                           }}
                         >
                           <div className="item-info">
@@ -129,7 +133,6 @@ const SingelRestaurant = () => {
             );
           })}
       </div>
-      {modalOpen && <Modal modalOpen={modalOpen} />}
     </Wrapper>
   );
 };
@@ -187,5 +190,11 @@ const Wrapper = styled.section`
     margin-top: 0.1rem;
     margin-left: 0.1rem;
     max-width: 260px;
+  }
+  .added-text {
+    position: fixed;
+    top: 50%;
+    left: 30%;
+    color: #f44336;
   }
 `;

@@ -13,8 +13,8 @@ import { useProductsContext } from "../context/products_context";
 import { useUserContext } from "../context/user_context";
 const promise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
-const CheckoutForm = () => {
-  const { cart } = useProductsContext();
+const CheckoutForm = ({ sendOrderData }) => {
+  const { cart, refreshCart } = useProductsContext();
   const { user } = useUserContext();
   const navigate = useNavigate();
   // stripe things
@@ -47,8 +47,8 @@ const CheckoutForm = () => {
   const createPaymentIntent = async () => {
     try {
       const { data } = await axios.post(
-        "/.netlify/netlify-functions/create-payment-intent",
-        cart.subtotal.raw
+        "/.netlify/functions/create-payment-intent",
+        cart.subtotal.raw + 2.5
       );
       setClientSecret(data.clientSecret);
       console.log(data.clientSecret);
@@ -64,6 +64,7 @@ const CheckoutForm = () => {
   const handleStripeSubmit = async (ev) => {
     ev.preventDefault();
     setProccessing(true);
+    refreshCart();
     const payload = await stripe.confirmCardPayment(clientSecret, {
       payment_method: {
         card: elements.getElement(CardElement),
@@ -76,9 +77,10 @@ const CheckoutForm = () => {
       setError(null);
       setProccessing(true);
       setSucceeded(true);
+      sendOrderData();
       // send corfirm email and order
       setTimeout(() => {
-        navigate(0);
+        navigate("/");
       }, 7000);
     }
   };
@@ -89,7 +91,14 @@ const CheckoutForm = () => {
   return (
     <div>
       {succeeded ? (
-        <article>
+        <article
+          style={{
+            color: "#f44336",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
           <h4>Thank you</h4>
           <h4>Your paymennt was successful!</h4>
           <h4>Redirecting to home page shortly</h4>
@@ -103,7 +112,7 @@ const CheckoutForm = () => {
           }}
         >
           <h5>Hello {user && user.nickname}</h5>
-          Total: ${cart.subtotal.raw}
+          Total: ${cart.subtotal.raw + 2.5}
         </article>
       )}
       <form style={{ width: "100%" }} onSubmit={handleStripeSubmit}>
@@ -136,11 +145,11 @@ const CheckoutForm = () => {
     </div>
   );
 };
-const Stripecheckout = () => {
+const Stripecheckout = ({ sendOrderData }) => {
   return (
     <Wrapper>
       <Elements stripe={promise}>
-        <CheckoutForm />
+        <CheckoutForm sendOrderData={sendOrderData} />
       </Elements>
     </Wrapper>
   );

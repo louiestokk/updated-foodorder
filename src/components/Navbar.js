@@ -1,43 +1,72 @@
 import React from "react";
-import { FaUserAlt } from "react-icons/fa";
 import { Badge } from "@material-ui/core";
 import { ShoppingBasket } from "@material-ui/icons";
 import { useLocation } from "react-router-dom";
-import { useUserContext } from "../context/user_context";
 import { useProductsContext } from "../context/products_context";
 import styled from "styled-components";
-const Navbar = () => {
-  const { user, loginWithRedirect, logout } = useUserContext();
-  const { cart, modalOpen, setModalOpen } = useProductsContext();
+import { getAuth, signOut } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+const Navbar = ({ signIn, logedinUser, loading, usersBusiness }) => {
+  const auth = getAuth();
+  const navigate = useNavigate();
+  const { cart, setModalOpen } = useProductsContext();
   const location = useLocation();
+
   return (
     <Wrapper>
-      <h1 style={{ marginLeft: "1rem" }}>ZanziFood 🍕</h1>
+      <h1
+        style={{ marginLeft: "1rem", cursor: "pointer" }}
+        onClick={() => navigate("/")}
+      >
+        ZanziFood 🍕
+      </h1>
+      {usersBusiness.length > 0 && (
+        <Link
+          to={`/dashboard/${
+            logedinUser.displayName && logedinUser.reloadUserInfo.localId
+          }`}
+        >
+          Dashboard
+        </Link>
+      )}
       <div style={{ display: "flex", alignItems: "center" }}>
-        {location.pathname !== "/" && (
-          <button onClick={() => setModalOpen(true)}>
+        {
+          <button onClick={() => navigate("/cart")}>
             <Badge badgeContent={cart.total_items} style={{ color: "white" }}>
-              <ShoppingBasket
-                style={{ color: "white" }}
-                onClick={() => setModalOpen(true)}
-              />
+              <ShoppingBasket style={{ color: "white" }} />
             </Badge>
           </button>
-        )}
+        }
 
-        {!user && (
-          <button onClick={loginWithRedirect} type="button">
+        {!logedinUser.displayName && (
+          <button onClick={signIn} type="button">
             <span
               style={{ fontSize: "0.8rem", borderBottom: "1px solid white" }}
             >
-              Login
+              {loading ? "proccessing..." : "Login"}
             </span>
           </button>
         )}
-        {user && (
-          <div className="circle">
-            <FaUserAlt style={{ fontSize: "0.7rem" }} />
-            <h4>{user.nickname}</h4>
+        {logedinUser.displayName && (
+          <div
+            className="circle"
+            onClick={() => {
+              signOut(auth)
+                .then(() => {
+                  navigate(0);
+                })
+                .catch((error) => {
+                  // An error happened.
+                });
+            }}
+          >
+            <span
+              style={{ fontSize: "0.8rem", borderBottom: "1px solid white" }}
+            >
+              {loading ? "proccessing..." : "Logout"}
+            </span>
+            <h4>{logedinUser.displayName}</h4>
           </div>
         )}
       </div>
@@ -47,6 +76,7 @@ const Navbar = () => {
 
 export default Navbar;
 const Wrapper = styled.nav`
+  position: relative;
   button {
     background: transparent;
     color: white;

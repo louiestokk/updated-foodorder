@@ -1,11 +1,9 @@
 import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import { MdKeyboardArrowRight } from "react-icons/md";
-import { MdKeyboardArrowLeft } from "react-icons/md";
 import { useUserContext } from "../context/user_context";
 
-const AdressForm = ({ setActiveStep, contact, setContact, sendOrderData }) => {
-  const { user } = useUserContext();
+const AdressForm = ({ setActiveStep, contact, setContact }) => {
   const form = useRef();
 
   return (
@@ -27,6 +25,12 @@ const AdressForm = ({ setActiveStep, contact, setContact, sendOrderData }) => {
         />
         <input
           type="text"
+          name="hotel"
+          placeholder="(Optional) Hotel Name"
+          onChange={(e) => setContact({ ...contact, hotel: e.target.value })}
+        />
+        <input
+          type="text"
           name="area"
           placeholder="Area: ex: Paje"
           required
@@ -39,12 +43,17 @@ const AdressForm = ({ setActiveStep, contact, setContact, sendOrderData }) => {
           placeholder="+255"
           onChange={(e) => setContact({ ...contact, phone: e.target.value })}
         />
-
+        <input
+          type="text"
+          name="explain"
+          placeholder="(Optional)  Explain for us where you are"
+          onChange={(e) => setContact({ ...contact, explain: e.target.value })}
+        />
         <button
           type="submit"
-          onClick={() => {
+          onClick={(e) => {
             setActiveStep(1);
-            sendOrderData();
+            e.preventDefault();
           }}
         >
           Next <MdKeyboardArrowRight className="icon" />
@@ -61,6 +70,7 @@ const Wrapper = styled.div`
   height: 200px;
   display: flex;
   justify-content: center;
+  margin-bottom: 2rem;
   form {
     display: flex;
     flex-direction: column;
@@ -81,5 +91,7 @@ const Wrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    background: #f44336;
+    color: white;
   }
 `;

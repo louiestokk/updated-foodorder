@@ -3,16 +3,20 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { BsFillArrowRightCircleFill } from "react-icons/bs";
 import { BsFillArrowLeftCircleFill } from "react-icons/bs";
+import { useLocation } from "react-router-dom";
 const Footer = () => {
+  const location = useLocation();
   return (
     <Wrapper>
-      <div className="link-container">
-        <Link to="/connectbusiness" className="link">
-          <BsFillArrowRightCircleFill className="bsicon" />
-          Connect your business
-          <BsFillArrowLeftCircleFill className="bsicon" />
-        </Link>
-      </div>
+      {location.pathname !== "/connectbusiness" && (
+        <div className="link-container">
+          <Link to="/connectbusiness" className="link">
+            <BsFillArrowRightCircleFill className="bsicon" />
+            Connect your business
+            <BsFillArrowLeftCircleFill className="bsicon" />
+          </Link>
+        </div>
+      )}
       <div style={{ marginTop: "1rem" }}>
         <h4>ZanziFood 🍕</h4>
       </div>

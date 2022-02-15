@@ -5,6 +5,8 @@ import { useProductsContext } from "../../context/products_context";
 const Restaurants = () => {
   const { business } = useProductsContext();
   const navigate = useNavigate();
+  const test = new Date().getHours();
+
   return (
     <Wrapper>
       {business.map((restaurant) => {
@@ -63,7 +65,7 @@ const Wrapper = styled.section`
     border-radius: 5px 5px;
   }
   .restaurant img {
-    opacity: 0.8;
+    opacity: 0.7;
     transition: all 0.3s linear;
     border-radius: 5px 5px;
   }
