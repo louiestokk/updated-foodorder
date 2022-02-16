@@ -8,7 +8,8 @@ const FirebaseProvider = ({ children }) => {
   const [logedinUser, setLogedinUser] = useState({});
   const [loading, setLoading] = useState(false);
   const [usersBusiness, setUsersBusiness] = useState([]);
-
+  const [orders, setOrders] = useState();
+  const [customers, setCustomers] = useState();
   const firebaseConfig = {
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
     authDomain: "zanzifood-98826.firebaseapp.com",
@@ -67,6 +68,8 @@ const FirebaseProvider = ({ children }) => {
         usersBusiness,
         setUsersBusiness,
         signIn,
+        orders,
+        customers,
       }}
     >
       {children}

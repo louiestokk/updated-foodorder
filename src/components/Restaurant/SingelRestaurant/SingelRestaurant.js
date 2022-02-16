@@ -7,6 +7,7 @@ import { BsFillInfoCircleFill } from "react-icons/bs";
 import { BsFillStarFill } from "react-icons/bs";
 import { MdRestaurantMenu } from "react-icons/md";
 import Navbar from "../../Navbar";
+import Footer from "../../Footer";
 const SingelRestaurant = () => {
   const { products, handleAddToCart, added, setAdded } = useProductsContext();
   const { id } = useParams();
@@ -136,6 +137,7 @@ const SingelRestaurant = () => {
             );
           })}
       </div>
+      <Footer />
     </Wrapper>
   );
 };
