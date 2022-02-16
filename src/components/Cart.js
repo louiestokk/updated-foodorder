@@ -4,9 +4,12 @@ import styled from "styled-components";
 import Checkout from "../pages/Checkout";
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, set } from "firebase/database";
-const Cart = ({ signIn, logedinUser, loading, usersBusiness }) => {
+import { useFirebaseContext } from "../context/firebase_context";
+
+const Cart = () => {
   const { cart, sides, handleUpdateCartQty, handleAddToCart } =
     useProductsContext();
+  const { signIn, logedinUser, loading, usersBusiness } = useFirebaseContext();
   const [showCheckout, setShowCheckout] = useState(false);
   const [contact, setContact] = useState({
     name: "",
@@ -116,7 +119,7 @@ const Cart = ({ signIn, logedinUser, loading, usersBusiness }) => {
           </button>
         ) : (
           <button type="button" onClick={signIn} className="pay-btn">
-            Login
+            {loading ? "proccessing..." : "Login"}
           </button>
         )}
       </div>
@@ -183,7 +186,7 @@ const Wrapper = styled.section`
     background: #f44336;
     color: white;
     border-radius: 4px 4px;
-    width: 6rem;
+    width: 7rem;
     height: 1.8rem;
     margin: 1rem 0;
   }

@@ -83,5 +83,6 @@ export const restaurants = [
     open: 11,
     close: 23,
     loid: "NDjE6aerAPcESnVoGnwwrzhWhBf2",
+    active: true,
   },
 ];

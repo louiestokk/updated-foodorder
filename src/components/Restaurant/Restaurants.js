@@ -2,8 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useProductsContext } from "../../context/products_context";
+import { Oval } from "react-loader-spinner";
+import { useFirebaseContext } from "../../context/firebase_context";
 const Restaurants = () => {
   const { business } = useProductsContext();
+  const { loading } = useFirebaseContext();
   const navigate = useNavigate();
   const test = new Date().getHours();
 

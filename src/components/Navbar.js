@@ -1,39 +1,32 @@
 import React from "react";
 import { Badge } from "@material-ui/core";
 import { ShoppingBasket } from "@material-ui/icons";
-import { useLocation } from "react-router-dom";
 import { useProductsContext } from "../context/products_context";
 import styled from "styled-components";
 import { getAuth, signOut } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
-const Navbar = ({ signIn, logedinUser, loading, usersBusiness }) => {
+import { useFirebaseContext } from "../context/firebase_context";
+const Navbar = () => {
   const auth = getAuth();
   const navigate = useNavigate();
+  const loaction = useLocation();
   const { cart, setModalOpen } = useProductsContext();
-  const location = useLocation();
+  const { signIn, logedinUser, loading, usersBusiness } = useFirebaseContext();
 
   return (
     <Wrapper>
       <h1
         style={{ marginLeft: "1rem", cursor: "pointer" }}
         onClick={() => navigate("/")}
+        className="logo"
       >
         ZanziFood 🍕
       </h1>
-      {usersBusiness.length > 0 && (
-        <Link
-          to={`/dashboard/${
-            logedinUser.displayName && logedinUser.reloadUserInfo.localId
-          }`}
-        >
-          Dashboard
-        </Link>
-      )}
       <div style={{ display: "flex", alignItems: "center" }}>
         {
           <button onClick={() => navigate("/cart")}>
-            <Badge badgeContent={cart.total_items} style={{ color: "white" }}>
+            <Badge badgeContent={cart.total_items}>
               <ShoppingBasket style={{ color: "white" }} />
             </Badge>
           </button>
@@ -49,24 +42,29 @@ const Navbar = ({ signIn, logedinUser, loading, usersBusiness }) => {
           </button>
         )}
         {logedinUser.displayName && (
-          <div
-            className="circle"
-            onClick={() => {
-              signOut(auth)
-                .then(() => {
-                  navigate(0);
-                })
-                .catch((error) => {
-                  // An error happened.
-                });
-            }}
-          >
-            <span
-              style={{ fontSize: "0.8rem", borderBottom: "1px solid white" }}
-            >
-              {loading ? "proccessing..." : "Logout"}
-            </span>
-            <h4>{logedinUser.displayName}</h4>
+          <div className="account-menu">
+            {usersBusiness.length > 0 ? (
+              <div>
+                <Link to={`/dashboard/${logedinUser.reloadUserInfo.localId}`}>
+                  Dashboard
+                </Link>
+              </div>
+            ) : (
+              <h4
+                className="logout"
+                onClick={() => {
+                  signOut(auth)
+                    .then(() => {
+                      navigate(0);
+                    })
+                    .catch((error) => {
+                      // An error happened.
+                    });
+                }}
+              >
+                Logout
+              </h4>
+            )}
           </div>
         )}
       </div>
@@ -105,5 +103,32 @@ const Wrapper = styled.nav`
     right: 0;
     top: 16%;
     color: red;
+  }
+  a {
+    margin-right: 0.5rem;
+    color: white;
+    font-size: 0.9rem;
+    font-family: "Righteous", cursive;
+    border: 1px solid white;
+    padding: 0.3rem;
+    border-radius: 4px 4px;
+  }
+  a:hover {
+  }
+
+  .logout {
+    margin-right: 0.5rem;
+    cursor: pointer;
+    &:hover {
+      border-bottom: 1px solid white;
+    }
+  }
+  @media screen and (max-width: 500px) {
+    .logo {
+      font-size: 1.8rem;
+    }
+    .cart-btn {
+      font-size: 0.8rem;
+    }
   }
 `;

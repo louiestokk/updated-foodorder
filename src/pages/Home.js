@@ -1,13 +1,12 @@
 import React from "react";
 import Restaurants from "../components/Restaurant/Restaurants";
 import styled from "styled-components";
-import { useUserContext } from "../context/user_context";
+import Navbar from "../components/Navbar";
 import Filter from "../components/Filter/Filter";
 const Home = () => {
-  const { user } = useUserContext();
-
   return (
     <Wrapper>
+      <Navbar />
       <div className="banner"></div>
       <Filter />
       <Restaurants />

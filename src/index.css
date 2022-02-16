@@ -13,6 +13,9 @@ h3,
 h4 {
   font-family: "Righteous", cursive;
 }
+a {
+  text-decoration: none;
+}
 p,
 span {
   font-family: "Open Sans", sans-serif;

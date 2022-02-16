@@ -6,13 +6,14 @@ import { restaurants } from "../../../utils/data";
 import { BsFillInfoCircleFill } from "react-icons/bs";
 import { BsFillStarFill } from "react-icons/bs";
 import { MdRestaurantMenu } from "react-icons/md";
-
+import Navbar from "../../Navbar";
 const SingelRestaurant = () => {
   const { products, handleAddToCart, added, setAdded } = useProductsContext();
   const { id } = useParams();
 
   return (
     <Wrapper>
+      <Navbar />
       <div>
         <div
           style={{
@@ -98,8 +99,10 @@ const SingelRestaurant = () => {
                   <MdRestaurantMenu /> Menu
                 </h4>
                 <div className="menu">
-                  {added && (
+                  {added ? (
                     <h4 className="added-text">Item added to your food bag</h4>
+                  ) : (
+                    ""
                   )}
                   {products
                     .filter((el) => menu.includes(el.id))
