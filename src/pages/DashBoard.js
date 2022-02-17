@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { FcSalesPerformance } from "react-icons/fc";
 import { FiUsers } from "react-icons/fi";
 import { useFirebaseContext } from "../context/firebase_context";
+import { useUserContext } from "../context/user_context";
 import { FaPizzaSlice } from "react-icons/fa";
 import { FaBars } from "react-icons/fa";
 import { FiSettings } from "react-icons/fi";
@@ -13,7 +14,8 @@ import { BsPlusSquareFill } from "react-icons/bs";
 import { useProductsContext } from "../context/products_context";
 import axios from "axios";
 const DashBoard = () => {
-  const { usersBusiness, orders, customers } = useFirebaseContext();
+  const { orders, customers } = useFirebaseContext();
+  const { usersBusiness, logout } = useUserContext();
   const { products } = useProductsContext();
   const [showDash, setShowDash] = useState(false);
   const [showSett, setShowSett] = useState(false);
@@ -127,6 +129,7 @@ const DashBoard = () => {
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <FaBars className="bars" onClick={() => setShowDash(!showDash)} />
         <button
+          onClick={() => logout({ returnTo: window.location.origin })}
           type="button"
           style={{
             margin: "0.5rem 0.5rem",

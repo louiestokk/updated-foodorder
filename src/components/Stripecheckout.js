@@ -51,7 +51,6 @@ const CheckoutForm = ({ sendOrderData }) => {
         cart.subtotal.raw + 2.5
       );
       setClientSecret(data.clientSecret);
-      console.log(data.clientSecret);
     } catch (error) {
       console.log(error.reponse);
     }

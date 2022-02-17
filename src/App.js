@@ -2,10 +2,10 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import SingelRestaurant from "./components/Restaurant/SingelRestaurant/SingelRestaurant";
 import Cart from "./components/Cart";
-import { useFirebaseContext } from "./context/firebase_context";
+import { useUserContext } from "./context/user_context";
 import { ErrorPage, DashBoard, Connect, PrivateRoute, Home } from "./pages";
 function App() {
-  const { logedinUser } = useFirebaseContext();
+  const { user } = useUserContext();
 
   return (
     <Router>
@@ -15,7 +15,7 @@ function App() {
         <Route path="/connectbusiness" exact element={<Connect />} />
         <Route path="/cart" exact element={<Cart />} />
         <Route path={`/restaurant/:id`} exact element={<SingelRestaurant />} />
-        {logedinUser.displayName && (
+        {user && (
           <Route
             path={`/dashboard/:loid`}
             exact

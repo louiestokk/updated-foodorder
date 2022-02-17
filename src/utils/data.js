@@ -90,7 +90,7 @@ export const restaurants = [
     number: "+255 000 000",
     open: 11,
     close: 23,
-    loid: "NDjE6aerAPcESnVoGnwwrzhWhBf2",
+    loid: "auth0|6123a867b540dd006b2d2a2b",
     active: true,
     days: "All",
     offer: "10%",

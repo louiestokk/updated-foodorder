@@ -5,7 +5,7 @@ import { useProductsContext } from "../../context/products_context";
 import { restaurants } from "../../utils/data";
 const Filter = () => {
   const [showLocation, setShowLocation] = useState(false);
-  const { fetchProducts, setBusiness } = useProductsContext();
+  const { setBusiness } = useProductsContext();
   const filterCategory = (e) => {
     setBusiness(
       restaurants.filter((el) => el.category.includes(e.target.innerText))

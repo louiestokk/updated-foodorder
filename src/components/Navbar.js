@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Badge } from "@material-ui/core";
 import { ShoppingBasket } from "@material-ui/icons";
 import { useProductsContext } from "../context/products_context";
@@ -8,15 +8,26 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useFirebaseContext } from "../context/firebase_context";
 import { useUserContext } from "../context/user_context";
+import { restaurants } from "../utils/data";
 const Navbar = () => {
   const auth = getAuth();
   const navigate = useNavigate();
   const loaction = useLocation();
   const { cart, setModalOpen } = useProductsContext();
-  const { loginWithRedirect, logout, user, isAuthenticated } = useUserContext();
-  const { signIn, logedinUser, loading, usersBusiness } = useFirebaseContext();
-  console.log(user.sub);
-  console.log(isAuthenticated);
+  const {
+    loginWithRedirect,
+    logout,
+    user,
+    isAuthenticated,
+    usersBusiness,
+    setUsersBusiness,
+  } = useUserContext();
+  // const { signIn, logedinUser, loading, usersBusiness } = useFirebaseContext();
+  useEffect(() => {
+    if (user) {
+      setUsersBusiness(restaurants.filter((el) => el.loid === user.sub));
+    }
+  }, [user]);
   return (
     <Wrapper>
       <h1
@@ -35,25 +46,32 @@ const Navbar = () => {
           </button>
         }
 
-        {!logedinUser.displayName && (
-          <button onClick={loginWithRedirect} type="button">
+        {!isAuthenticated && (
+          <button
+            onClick={(e) => {
+              loginWithRedirect();
+              e.target.textContent = !isAuthenticated && "proccessing...";
+            }}
+            type="button"
+          >
             <span
               style={{ fontSize: "0.8rem", borderBottom: "1px solid white" }}
             >
-              {loading ? "proccessing..." : "Login"}
+              Login
             </span>
           </button>
         )}
-        {logedinUser.displayName && (
+        {isAuthenticated && (
           <div className="account-menu">
             {usersBusiness.length > 0 ? (
               <div>
-                <Link to={`/dashboard/${logedinUser.reloadUserInfo.localId}`}>
-                  Dashboard
-                </Link>
+                <Link to={`/dashboard/${user.sub}`}>Dashboard</Link>
               </div>
             ) : (
-              <h4 className="logout" onClick={logout}>
+              <h4
+                className="logout"
+                onClick={() => logout({ returnTo: window.location.origin })}
+              >
                 Logout
               </h4>
             )}

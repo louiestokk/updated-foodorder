@@ -1,7 +1,6 @@
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
 import { MdKeyboardArrowRight } from "react-icons/md";
-import { useUserContext } from "../context/user_context";
 
 const AdressForm = ({ setActiveStep, contact, setContact }) => {
   const form = useRef();

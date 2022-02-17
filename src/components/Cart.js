@@ -4,13 +4,14 @@ import styled from "styled-components";
 import Checkout from "../pages/Checkout";
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, set } from "firebase/database";
-import { useFirebaseContext } from "../context/firebase_context";
+import { useUserContext } from "../context/user_context";
 
 const Cart = () => {
   const { cart, sides, handleUpdateCartQty, handleAddToCart } =
     useProductsContext();
-  const { signIn, logedinUser, loading, usersBusiness } = useFirebaseContext();
+  const { loginWithRedirect, user, isAuthenticated } = useUserContext();
   const [showCheckout, setShowCheckout] = useState(false);
+
   const [contact, setContact] = useState({
     name: "",
     address: "",
@@ -19,6 +20,7 @@ const Cart = () => {
     hotel: "none",
     explain: "none",
   });
+
   const firebaseConfig = {
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
     authDomain: "zanzifood-98826.firebaseapp.com",
@@ -40,7 +42,7 @@ const Cart = () => {
         area: contact.area,
         hotel: contact.hotel,
         phone: contact.phone,
-        email: logedinUser.email,
+        email: user.email,
         explain: contact.explain,
       },
       order: cart.line_items,
@@ -109,7 +111,7 @@ const Cart = () => {
         <p>Food: ${cart.subtotal && cart.subtotal.raw}</p>
         <p>Delivery Fee: ${2.5}</p>
         <h4>Total: ${cart.subtotal && cart.subtotal.raw + 2.5}</h4>
-        {logedinUser.displayName ? (
+        {user.sub ? (
           <button
             type="button"
             className="pay-btn"
@@ -118,14 +120,20 @@ const Cart = () => {
             Pay ${cart.subtotal.raw + 2.5}
           </button>
         ) : (
-          <button type="button" onClick={signIn} className="pay-btn">
-            {loading ? "proccessing..." : "Login"}
+          <button
+            type="button"
+            onClick={(e) => {
+              loginWithRedirect();
+              e.target.textContent = !isAuthenticated && "proccessing...";
+            }}
+            className="pay-btn"
+          >
+            Login
           </button>
         )}
       </div>
       {showCheckout && (
         <Checkout
-          logedinUser={logedinUser}
           sendOrderData={sendOrderData}
           setContact={setContact}
           contact={contact}
