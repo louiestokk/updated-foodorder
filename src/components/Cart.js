@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { useProductsContext } from "../context/products_context";
 import styled from "styled-components";
 import Checkout from "../pages/Checkout";
-import { initializeApp } from "firebase/app";
-import { getDatabase, ref, set } from "firebase/database";
+import axios from "axios";
+// import { initializeApp } from "firebase/app";
+// import { getDatabase, ref, set } from "firebase/database";
 import { useUserContext } from "../context/user_context";
 
 const Cart = () => {
@@ -21,36 +22,59 @@ const Cart = () => {
     explain: "none",
   });
 
-  const firebaseConfig = {
-    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-    authDomain: "zanzifood-98826.firebaseapp.com",
-    databaseURL: "https://zanzifood-98826-default-rtdb.firebaseio.com",
-    projectId: "zanzifood-98826",
-    storageBucket: "zanzifood-98826.appspot.com",
-    messagingSenderId: "554696686395",
-    appId: "1:554696686395:web:dcadb3237dfc66e673951e",
-    measurementId: "G-PGJTLMRSXM",
-  };
+  // const firebaseConfig = {
+  //   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  //   authDomain: "zanzifood-98826.firebaseapp.com",
+  //   databaseURL: "https://zanzifood-98826-default-rtdb.firebaseio.com",
+  //   projectId: "zanzifood-98826",
+  //   storageBucket: "zanzifood-98826.appspot.com",
+  //   messagingSenderId: "554696686395",
+  //   appId: "1:554696686395:web:dcadb3237dfc66e673951e",
+  //   measurementId: "G-PGJTLMRSXM",
+  // };
 
-  const app = initializeApp(firebaseConfig);
-  const sendOrderData = () => {
-    const db = getDatabase();
-    set(ref(db, "new_order"), {
-      contact: {
-        name: contact.name,
-        address: contact.address,
-        area: contact.area,
-        hotel: contact.hotel,
-        phone: contact.phone,
-        email: user.email,
-        explain: contact.explain,
-      },
-      order: cart.line_items,
-      amount: {
-        order: cart.subtotal.raw,
-        delivery_fee: 2.5,
-      },
-    });
+  // const app = initializeApp(firebaseConfig);
+  // const sendOrderData = () => {
+  //   const db = getDatabase();
+  //   set(ref(db, "new_order"), {
+  //     contact: {
+  //       name: contact.name,
+  //       address: contact.address,
+  //       area: contact.area,
+  //       hotel: contact.hotel,
+  //       phone: contact.phone,
+  //       email: user.email,
+  //       explain: contact.explain,
+  //     },
+  //     order: cart.line_items,
+  //     amount: {
+  //       order: cart.subtotal.raw,
+  //       delivery_fee: 2.5,
+  //     },
+  //   });
+  // };
+
+  const sendOrderData = async () => {
+    try {
+      const resp = await axios.post("http://localhost:3000/new_order", {
+        contact: {
+          name: contact.name,
+          address: contact.address,
+          area: contact.area,
+          hotel: contact.hotel,
+          phone: contact.phone,
+          email: user.email,
+          explain: contact.explain,
+        },
+        order: cart.line_items,
+        amount: {
+          order: cart.subtotal.raw,
+          delivery_fee: 2.5,
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <Wrapper>
@@ -111,7 +135,7 @@ const Cart = () => {
         <p>Food: ${cart.subtotal && cart.subtotal.raw}</p>
         <p>Delivery Fee: ${2.5}</p>
         <h4>Total: ${cart.subtotal && cart.subtotal.raw + 2.5}</h4>
-        {user.sub ? (
+        {user && user.sub ? (
           <button
             type="button"
             className="pay-btn"
