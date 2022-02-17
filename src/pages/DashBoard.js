@@ -124,7 +124,20 @@ const DashBoard = () => {
           </button>
         </div>
       </div>
-      <FaBars className="bars" onClick={() => setShowDash(!showDash)} />
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <FaBars className="bars" onClick={() => setShowDash(!showDash)} />
+        <button
+          type="button"
+          style={{
+            margin: "0.5rem 0.5rem",
+            background: "transparent",
+            color: "white",
+            borderBottom: "1px solid white",
+          }}
+        >
+          Logout
+        </button>
+      </div>
       <div
         className="sec sec-1"
         style={{ opacity: showDash && "0.1", cursor: showDash && "pointer" }}

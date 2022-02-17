@@ -3,17 +3,20 @@ import { Badge } from "@material-ui/core";
 import { ShoppingBasket } from "@material-ui/icons";
 import { useProductsContext } from "../context/products_context";
 import styled from "styled-components";
-import { getAuth, signOut } from "firebase/auth";
+import { getAuth, signInWithRedirect, signOut } from "firebase/auth";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useFirebaseContext } from "../context/firebase_context";
+import { useUserContext } from "../context/user_context";
 const Navbar = () => {
   const auth = getAuth();
   const navigate = useNavigate();
   const loaction = useLocation();
   const { cart, setModalOpen } = useProductsContext();
+  const { loginWithRedirect, logout, user, isAuthenticated } = useUserContext();
   const { signIn, logedinUser, loading, usersBusiness } = useFirebaseContext();
-
+  console.log(user.sub);
+  console.log(isAuthenticated);
   return (
     <Wrapper>
       <h1
@@ -33,7 +36,7 @@ const Navbar = () => {
         }
 
         {!logedinUser.displayName && (
-          <button onClick={signIn} type="button">
+          <button onClick={loginWithRedirect} type="button">
             <span
               style={{ fontSize: "0.8rem", borderBottom: "1px solid white" }}
             >
@@ -50,18 +53,7 @@ const Navbar = () => {
                 </Link>
               </div>
             ) : (
-              <h4
-                className="logout"
-                onClick={() => {
-                  signOut(auth)
-                    .then(() => {
-                      navigate(0);
-                    })
-                    .catch((error) => {
-                      // An error happened.
-                    });
-                }}
-              >
+              <h4 className="logout" onClick={logout}>
                 Logout
               </h4>
             )}
