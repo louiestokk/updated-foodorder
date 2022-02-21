@@ -1,13 +1,58 @@
 import React, { useRef } from "react";
 import styled from "styled-components";
 import { MdKeyboardArrowRight } from "react-icons/md";
-
-const AdressForm = ({ setActiveStep, contact, setContact }) => {
+import { useUserContext } from "../context/user_context";
+import { useProductsContext } from "../context/products_context";
+import emailjs from "@emailjs/browser";
+const AdressForm = ({
+  setActiveStep,
+  contact,
+  setContact,
+  sendOrderData,
+  orderId,
+}) => {
   const form = useRef();
+  const { user, paid } = useUserContext();
+  const { cart } = useProductsContext();
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+    if (paid) {
+      emailjs
+        .sendForm(
+          "service_4kw1opn",
+          "template_h32mvfs",
+          form.current,
+          "user_vErATX9GYURJuxCrMM6NM"
+        )
+        .then(
+          (result) => {
+            if (result.text === "OK") {
+              console.log("email sent");
+            }
+          },
+          (error) => {
+            console.log(error.text);
+          }
+        );
+    }
+  };
 
   return (
     <Wrapper>
       <form ref={form}>
+        <input
+          type="text"
+          name="orderId"
+          value={orderId}
+          style={{ display: "none" }}
+        />
+        <input
+          type="text"
+          name="email"
+          value={user.email && user.email}
+          style={{ display: "none" }}
+        />
         <input
           type="text"
           name="name"
@@ -48,11 +93,26 @@ const AdressForm = ({ setActiveStep, contact, setContact }) => {
           placeholder="(Optional)  Explain for us where you are"
           onChange={(e) => setContact({ ...contact, explain: e.target.value })}
         />
+        <input
+          type="text"
+          name="items"
+          value={cart.line_items.map((el) => el.name)}
+          style={{ display: "none" }}
+        />
+        <input
+          type="text"
+          name="price"
+          value={`$${cart.subtotal.raw + 2.5}`}
+          style={{ display: "none" }}
+        />
         <button
           type="submit"
           onClick={(e) => {
             setActiveStep(1);
             e.preventDefault();
+            sendOrderData(e);
+            localStorage.setItem("zanzifoodOrder", orderId);
+            sendEmail(e);
           }}
         >
           Next <MdKeyboardArrowRight className="icon" />

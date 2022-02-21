@@ -3,14 +3,13 @@ import { Badge } from "@material-ui/core";
 import { ShoppingBasket } from "@material-ui/icons";
 import { useProductsContext } from "../context/products_context";
 import styled from "styled-components";
-import { getAuth, signInWithRedirect, signOut } from "firebase/auth";
+
 import { useNavigate, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { useFirebaseContext } from "../context/firebase_context";
+
 import { useUserContext } from "../context/user_context";
 import { restaurants } from "../utils/data";
 const Navbar = () => {
-  const auth = getAuth();
   const navigate = useNavigate();
   const loaction = useLocation();
   const { cart, setModalOpen } = useProductsContext();

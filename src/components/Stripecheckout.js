@@ -15,7 +15,7 @@ const promise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
 const CheckoutForm = ({ sendOrderData }) => {
   const { cart, refreshCart } = useProductsContext();
-  const { user } = useUserContext();
+  const { user, setPaid } = useUserContext();
   const navigate = useNavigate();
   // stripe things
   const [succeeded, setSucceeded] = useState(false);
@@ -77,6 +77,7 @@ const CheckoutForm = ({ sendOrderData }) => {
       setProccessing(true);
       setSucceeded(true);
       sendOrderData();
+      setPaid(true);
       // send corfirm email and order
       setTimeout(() => {
         navigate("/");

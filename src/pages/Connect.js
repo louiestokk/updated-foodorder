@@ -2,14 +2,14 @@ import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import { FaPizzaSlice } from "react-icons/fa";
 import emailjs from "@emailjs/browser";
-import { init } from "@emailjs/browser";
 import { useNavigate } from "react-router-dom";
-init("user_vErATX9GYURJuxCrMM6NM");
+
 const Connect = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
   const form = useRef();
+
   const sendEmail = (e) => {
     e.preventDefault();
     setLoading(true);
@@ -227,5 +227,9 @@ const Wrapper = styled.section`
     align-items: center;
     margin: 2rem 0;
     text-align: center;
+  }
+  .confirm h1,
+  p {
+    max-width: 340px;
   }
 `;

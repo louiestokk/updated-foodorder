@@ -4,7 +4,7 @@ import AdressForm from "../components/AdressForm";
 import { Paper, Stepper, Step, StepLabel } from "@material-ui/core";
 
 const steps = ["Address", "Payment"];
-const Checkout = ({ sendOrderData, setContact, contact }) => {
+const Checkout = ({ sendOrderData, setContact, contact, orderId }) => {
   const [activeStep, setActiveStep] = useState(0);
 
   return (
@@ -25,6 +25,8 @@ const Checkout = ({ sendOrderData, setContact, contact }) => {
           setActiveStep={setActiveStep}
           setContact={setContact}
           contact={contact}
+          sendOrderData={sendOrderData}
+          orderId={orderId}
         />
       )}
       {activeStep === 1 && (

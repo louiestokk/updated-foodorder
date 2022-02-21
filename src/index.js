@@ -7,7 +7,7 @@ import { Auth0Provider } from "@auth0/auth0-react";
 import { UserProvider } from "./context/user_context";
 import { ProductsProvider } from "./context/products_context";
 import { GeoCoordsProvider } from "./context/geo_coords_context";
-import { FirebaseProvider } from "./context/firebase_context";
+
 ReactDOM.render(
   <Auth0Provider
     domain={process.env.REACT_APP_AUTH_DOMAIN}
@@ -16,13 +16,11 @@ ReactDOM.render(
     cacheLocation="localstorage"
   >
     <GeoCoordsProvider>
-      <FirebaseProvider>
-        <UserProvider>
-          <ProductsProvider>
-            <App />
-          </ProductsProvider>
-        </UserProvider>
-      </FirebaseProvider>
+      <UserProvider>
+        <ProductsProvider>
+          <App />
+        </ProductsProvider>
+      </UserProvider>
     </GeoCoordsProvider>
   </Auth0Provider>,
   document.getElementById("root")

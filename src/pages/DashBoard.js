@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { FcSalesPerformance } from "react-icons/fc";
 import { FiUsers } from "react-icons/fi";
-import { useFirebaseContext } from "../context/firebase_context";
 import { useUserContext } from "../context/user_context";
 import { FaPizzaSlice } from "react-icons/fa";
 import { FaBars } from "react-icons/fa";
@@ -14,7 +13,6 @@ import { BsPlusSquareFill } from "react-icons/bs";
 import { useProductsContext } from "../context/products_context";
 import axios from "axios";
 const DashBoard = () => {
-  const { orders, customers } = useFirebaseContext();
   const { usersBusiness, logout } = useUserContext();
   const { products } = useProductsContext();
   const [showDash, setShowDash] = useState(false);
@@ -22,7 +20,8 @@ const DashBoard = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [showNewItemInput, setShowNewItemInput] = useState(false);
   const [sent, setSent] = useState(false);
-
+  const [orders, setOrders] = useState();
+  const [customers, setCustomers] = useState();
   const {
     category,
     close,

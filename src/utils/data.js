@@ -37,7 +37,7 @@ export const restaurants = [
 
     number: "+255 000 000",
     type: "Fast Food",
-
+    email: "louiealsaffar@gmail.com",
     open: 10,
     close: 1,
   },
@@ -65,6 +65,7 @@ export const restaurants = [
     number: "+255 000 000",
     open: 11,
     close: 23,
+    email: "louiealsaffar@gmail.com",
   },
   {
     id: 1003,
@@ -72,13 +73,7 @@ export const restaurants = [
     type: "Veg / Vegan",
     deliverfee: 2.5,
     icon: <GiCarrot />,
-    menu: [
-      "prod_7ZAMo1LEWxwNJ4",
-      "prod_gvRjwOVO2Zl4mN",
-      "prod_31q0o3e0VBlDdj",
-      "prod_NXELwjdM2r53A4",
-      "prod_L1vOoZdOLWlRa8",
-    ],
+    menu: ["prod_7ZAMo1LEWxwNJ4"],
     location: "Paje",
     address: "test adress 1",
     zip: "",
@@ -95,5 +90,6 @@ export const restaurants = [
     days: "All",
     offer: "10%",
     offerdate: "30",
+    email: "louiestokk@gmail.com",
   },
 ];
