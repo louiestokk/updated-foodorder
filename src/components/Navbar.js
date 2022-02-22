@@ -60,21 +60,15 @@ const Navbar = () => {
             </span>
           </button>
         )}
-        {isAuthenticated && (
+        {isAuthenticated && usersBusiness.length > 0 && (
           <div className="account-menu">
-            {usersBusiness.length > 0 ? (
-              <div>
-                <Link to={`/dashboard/${user.sub}`}>Dashboard</Link>
-              </div>
-            ) : (
-              <h4
-                className="logout"
-                onClick={() => logout({ returnTo: window.location.origin })}
-              >
-                Logout
-              </h4>
-            )}
+            <div>
+              <Link to={`/dashboard/${user.sub}`}>Dashboard</Link>
+            </div>
           </div>
+        )}
+        {isAuthenticated && !usersBusiness.length > 0 && (
+          <Link to={`/mydashboard/${user.nickname}`}>Account</Link>
         )}
       </div>
     </Wrapper>

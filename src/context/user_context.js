@@ -7,7 +7,6 @@ const UserContext = React.createContext();
 const UserProvider = ({ children }) => {
   const { loginWithRedirect, logout, user, isAuthenticated } = useAuth0();
   const [usersBusiness, setUsersBusiness] = useState([]);
-  const [paid, setPaid] = useState(false);
 
   return (
     <UserContext.Provider
@@ -18,8 +17,6 @@ const UserProvider = ({ children }) => {
         isAuthenticated,
         usersBusiness,
         setUsersBusiness,
-        paid,
-        setPaid,
       }}
     >
       {children}

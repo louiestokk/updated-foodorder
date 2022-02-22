@@ -13,9 +13,9 @@ import { useProductsContext } from "../context/products_context";
 import { useUserContext } from "../context/user_context";
 const promise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
-const CheckoutForm = ({ sendOrderData }) => {
+const CheckoutForm = ({ sendOrderData, calculateDeliveryFee }) => {
   const { cart, refreshCart } = useProductsContext();
-  const { user, setPaid } = useUserContext();
+  const { user } = useUserContext();
   const navigate = useNavigate();
   // stripe things
   const [succeeded, setSucceeded] = useState(false);
@@ -77,7 +77,7 @@ const CheckoutForm = ({ sendOrderData }) => {
       setProccessing(true);
       setSucceeded(true);
       sendOrderData();
-      setPaid(true);
+
       // send corfirm email and order
       setTimeout(() => {
         navigate("/");
@@ -112,7 +112,7 @@ const CheckoutForm = ({ sendOrderData }) => {
           }}
         >
           <h5>Hello {user && user.nickname}</h5>
-          Total: ${cart.subtotal.raw + 2.5}
+          Total: ${cart.subtotal.raw + calculateDeliveryFee()}
         </article>
       )}
       <form style={{ width: "100%" }} onSubmit={handleStripeSubmit}>
@@ -145,11 +145,14 @@ const CheckoutForm = ({ sendOrderData }) => {
     </div>
   );
 };
-const Stripecheckout = ({ sendOrderData }) => {
+const Stripecheckout = ({ sendOrderData, calculateDeliveryFee }) => {
   return (
     <Wrapper>
       <Elements stripe={promise}>
-        <CheckoutForm sendOrderData={sendOrderData} />
+        <CheckoutForm
+          sendOrderData={sendOrderData}
+          calculateDeliveryFee={calculateDeliveryFee}
+        />
       </Elements>
     </Wrapper>
   );

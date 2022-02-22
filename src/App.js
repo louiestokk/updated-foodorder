@@ -4,7 +4,14 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import SingelRestaurant from "./components/Restaurant/SingelRestaurant/SingelRestaurant";
 import Cart from "./components/Cart";
 import { useUserContext } from "./context/user_context";
-import { ErrorPage, DashBoard, Connect, PrivateRoute, Home } from "./pages";
+import {
+  ErrorPage,
+  DashBoard,
+  Connect,
+  PrivateRoute,
+  Home,
+  UserPage,
+} from "./pages";
 function App() {
   const { user } = useUserContext();
   // const fetchRestaurants = async () => {
@@ -29,6 +36,15 @@ function App() {
         <Route path="/connectbusiness" exact element={<Connect />} />
         <Route path="/cart" exact element={<Cart />} />
         <Route path={`/restaurant/:id`} exact element={<SingelRestaurant />} />
+        <Route
+          path={`/mydashboard/:nickname`}
+          exact
+          element={
+            <PrivateRoute>
+              <UserPage />
+            </PrivateRoute>
+          }
+        />
         {user && (
           <Route
             path={`/dashboard/:loid`}

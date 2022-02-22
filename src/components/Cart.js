@@ -20,8 +20,32 @@ const Cart = () => {
   const test3 = [].concat(
     ...test2.map((el) => el.options.map((el) => +el.name))
   );
-  // end of get store name ,id and email
 
+  const calculateDeliveryFee = () => {
+    const restaurantsInCurrentOrder = restaurants
+      .filter((el) => test3.includes(el.id))
+      .map((rest) => rest.name);
+
+    let deliveryfee = 2.5;
+
+    if (restaurantsInCurrentOrder.length === 1) {
+      deliveryfee = 2.5;
+      return deliveryfee;
+    }
+    if (restaurantsInCurrentOrder.length === 2) {
+      deliveryfee = 4;
+      return deliveryfee;
+    }
+    if (restaurantsInCurrentOrder.length === 3) {
+      deliveryfee = 6;
+      return deliveryfee;
+    }
+    if (restaurantsInCurrentOrder.length > 3) {
+      deliveryfee = 10;
+      return deliveryfee;
+    }
+    return deliveryfee;
+  };
   const [contact, setContact] = useState({
     name: "",
     address: "",
@@ -44,6 +68,7 @@ const Cart = () => {
           explain: contact.explain,
         },
         orderid: orderId,
+        productsids: cart.line_items.map((el) => el.product_id),
         order: {
           item: cart.line_items.map((el) => el.name),
           quan: cart.line_items.map((el) => el.quantity),
@@ -64,9 +89,7 @@ const Cart = () => {
       console.log(error);
     }
   };
-  useEffect(() => {
-    document.querySelector(".pay-btn");
-  }, []);
+
   return (
     <Wrapper>
       <div className="cart">
@@ -124,15 +147,17 @@ const Cart = () => {
       </div>
       <div className="sum">
         <p>Food: ${cart.subtotal && cart.subtotal.raw}</p>
-        <p>Delivery Fee: ${2.5}</p>
-        <h4>Total: ${cart.subtotal && cart.subtotal.raw + 2.5}</h4>
+        <p>Delivery Fee: ${calculateDeliveryFee()}</p>
+        <h4>
+          Total: ${cart.subtotal && cart.subtotal.raw + calculateDeliveryFee()}
+        </h4>
         {user && user.sub ? (
           <button
             type="button"
             className="pay-btn"
             onClick={() => setShowCheckout(!showCheckout)}
           >
-            Pay ${cart.subtotal && cart.subtotal.raw + 2.5}
+            Pay ${cart.subtotal && cart.subtotal.raw + calculateDeliveryFee()}
           </button>
         ) : (
           <button
@@ -153,6 +178,7 @@ const Cart = () => {
           setContact={setContact}
           contact={contact}
           orderId={orderId}
+          calculateDeliveryFee={calculateDeliveryFee}
         />
       )}
     </Wrapper>

@@ -12,30 +12,28 @@ const AdressForm = ({
   orderId,
 }) => {
   const form = useRef();
-  const { user, paid } = useUserContext();
+  const { user } = useUserContext();
   const { cart } = useProductsContext();
-
+  console.log(user.email);
   const sendEmail = (e) => {
     e.preventDefault();
-    if (paid) {
-      emailjs
-        .sendForm(
-          "service_4kw1opn",
-          "template_h32mvfs",
-          form.current,
-          "user_vErATX9GYURJuxCrMM6NM"
-        )
-        .then(
-          (result) => {
-            if (result.text === "OK") {
-              console.log("email sent");
-            }
-          },
-          (error) => {
-            console.log(error.text);
+    emailjs
+      .sendForm(
+        "service_4kw1opn",
+        "template_h32mvfs",
+        form.current,
+        "user_vErATX9GYURJuxCrMM6NM"
+      )
+      .then(
+        (result) => {
+          if (result.text === "OK") {
+            console.log("email sent");
           }
-        );
-    }
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
   };
 
   return (

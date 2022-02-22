@@ -1,27 +1,30 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { FcSalesPerformance } from "react-icons/fc";
 import { FiUsers } from "react-icons/fi";
 import { useUserContext } from "../context/user_context";
-import { FaPizzaSlice } from "react-icons/fa";
+import { BiDollar } from "react-icons/bi";
 import { FaBars } from "react-icons/fa";
 import { FiSettings } from "react-icons/fi";
-import { Oval } from "react-loader-spinner";
 import { MdRestaurantMenu } from "react-icons/md";
 import { AiFillDollarCircle } from "react-icons/ai";
 import { BsPlusSquareFill } from "react-icons/bs";
+import { MdFastfood } from "react-icons/md";
 import { useProductsContext } from "../context/products_context";
 import axios from "axios";
+import { restaurants } from "../utils/data";
 const DashBoard = () => {
-  const { usersBusiness, logout } = useUserContext();
+  const { usersBusiness, logout, user } = useUserContext();
   const { products } = useProductsContext();
   const [showDash, setShowDash] = useState(false);
   const [showSett, setShowSett] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
+  const [showBilling, setShowBilling] = useState(false);
   const [showNewItemInput, setShowNewItemInput] = useState(false);
   const [sent, setSent] = useState(false);
-  const [orders, setOrders] = useState();
+  const [myOrders, setMyOrders] = useState([]);
   const [customers, setCustomers] = useState();
+  const form = useRef();
   const {
     category,
     close,
@@ -83,9 +86,44 @@ const DashBoard = () => {
         if (e.target.textContent !== "Menu") {
           setShowMenu(false);
         }
+        if (e.target.textContent !== "Billing") {
+          setShowBilling(false);
+        }
+        if (e.target.textContent === "Orders") {
+          setShowDash(false);
+        }
       });
     });
   }, []);
+
+  const fecthOrders = async () => {
+    try {
+      const { data } = await axios("http://localhost:3000/new_order");
+      setMyOrders(data.filter((el) => el.storeemails.includes(user.email)));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    fecthOrders();
+  }, []);
+  // för varje order behöver jag kolla vilken han e hans och räkna ut priset så skall lägg ain i ordern produkt id så att sen så kan jag filterar på id från ordern och kunden menu
+  const firstArray = [].concat(...myOrders.map((el) => el.productsids));
+  const secondArray = restaurants
+    .filter((el) => el.email === user.email)
+    .map((el) => el.menu);
+  // length på nedan ger antal i en array med produktid
+  const allmyorderditemsid = firstArray.filter((el) =>
+    secondArray[0].includes(el)
+  );
+  // nedan ger summan på 1 i en array
+  const pricefortheitem = products
+    .filter((el) => allmyorderditemsid.includes(el.id))
+    .map((el) => el.price.raw);
+  const myTotal = pricefortheitem.map(
+    (el) => el * allmyorderditemsid.length
+  )[0];
+
   return (
     <Wrapper>
       <div className={showDash ? "dash-menu show" : "dash-menu"}>
@@ -117,10 +155,21 @@ const DashBoard = () => {
           >
             <FcSalesPerformance className="icon" /> <p>Orders</p>
           </button>
-          <button type="button" className="dashBtn">
+          <button
+            type="button"
+            className="dashBtn"
+            onClick={() => setShowDash(!showDash)}
+          >
             <FiUsers /> Customers
           </button>
-          <button type="button" className="dashBtn">
+          <button
+            type="button"
+            className="dashBtn"
+            onClick={() => {
+              setShowDash(!showDash);
+              setShowBilling(!showBilling);
+            }}
+          >
             <AiFillDollarCircle /> Billing
           </button>
         </div>
@@ -275,7 +324,7 @@ const DashBoard = () => {
             </button>
           </div>
           <div className="orders">
-            <form className="business-data-form">
+            <form className="business-data-form" ref={form}>
               <div className="form-control">
                 <label htmlFor="bsname">Name</label>
                 <input
@@ -388,13 +437,63 @@ const DashBoard = () => {
             </form>
           </div>
         </div>
+        {showBilling && (
+          <div className="stats">
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <BiDollar className="icon" style={{ color: "orange" }} />
+              <p>Billing</p>
+            </div>
+            <div className="billing">
+              <h4 style={{ color: "black" }}>Total sales: ${myTotal}</h4>
+            </div>
+          </div>
+        )}
         <div className="stats">
           <div style={{ display: "flex", alignItems: "center" }}>
             <FcSalesPerformance className="icon" />
             <p>Orders</p>
           </div>
           <div className="orders">
-            <h3>{orders ? "orders here" : "no data"}</h3>
+            <h3>
+              {myOrders ? (
+                <div className="my-orders">
+                  {myOrders.map((el) => {
+                    const { amount, contact, order, orderid } = el;
+
+                    return (
+                      <div key={orderid} className="singel-my-order">
+                        <h4>OrderId: {orderid}</h4>
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            fontSize: "0.8rem",
+                          }}
+                        >
+                          <h5>Name: {contact.name}</h5>
+                          <h5>Address: {contact.address}</h5>
+                          <h5>Phone: {contact.phone}</h5>
+                          <h5>Email: {contact.email}</h5>
+                          <h5 style={{ color: "black" }}>
+                            Restaurant: {el.storename.map((el) => `${el}, `)}
+                          </h5>
+                          <h5>Items: {order.item}</h5>
+                          <h5>Quantity: {order.quan}</h5>
+                        </div>
+                        <div className="singel-order-btn">
+                          <button type="button">Cancel order</button>
+                          <button type="button">
+                            <MdFastfood /> Delivered
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              ) : (
+                "no data"
+              )}
+            </h3>
           </div>
         </div>
         <div className="stats">
@@ -403,16 +502,23 @@ const DashBoard = () => {
             <p>Customers</p>
           </div>
           <div className="orders">
-            <h3>{customers ? "customers here" : "no data"}</h3>
-          </div>
-        </div>
-        <div className="stats">
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <FaPizzaSlice className="icon" style={{ color: "orange" }} />
-            <p>Popular items</p>
-          </div>
-          <div className="orders">
-            <h3>{customers ? "customers here" : "no data"}</h3>
+            {myOrders.length > 0 ? (
+              <div className="my-customers">
+                {myOrders.map((el) => {
+                  const { name, email, phone } = el.contact;
+                  return (
+                    <div key={el.orderid} className="singel-customer">
+                      <h4>Name: {name}</h4>
+                      <p>Number: {phone}</p>
+                      <p>Email: {email}</p>
+                      <h4>Orders: {el.orderid}</h4>
+                    </div>
+                  );
+                })}
+              </div>
+            ) : (
+              "no data"
+            )}
           </div>
         </div>
       </div>
@@ -422,8 +528,9 @@ const DashBoard = () => {
 
 export default DashBoard;
 const Wrapper = styled.section`
-  height: 100%;
+  height: 900px;
   width: 100%;
+  margin-bottom: 2rem;
   background: #f44336;
   position: relative;
   .sec-1 {
@@ -433,7 +540,7 @@ const Wrapper = styled.section`
   .stats {
     position: relative;
     width: 80%;
-    height: 200px;
+    height: 240px;
     background: white;
     border-radius: 4px 4px;
     margin: 1rem auto;
@@ -531,6 +638,55 @@ const Wrapper = styled.section`
   }
   .menu-container {
     overflow-y: scroll;
+  }
+  .singel-my-order {
+    border: 1px solid #f44336;
+    width: 280px;
+    margin: 0 0.3rem;
+  }
+  .singel-order-btn {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+  .singel-order-btn button {
+    width: 6rem;
+    height: 1.1rem;
+    border: none;
+    bordder-radius: 4px 4px;
+    background: #f44336;
+    color: white;
+    margin-top: 1rem;
+    margin-right: 0.1rem;
+    margin-left: 0.1rem;
+    border-radius: 4px 4px;
+  }
+  .my-orders {
+    display: flex;
+    overflow-x: scroll;
+  }
+  .my-customers {
+    display: flex;
+    overflow-x: scroll;
+    width: 100%;
+  }
+  .singel-customer h4 {
+    color: #f44336;
+  }
+  .singel-customer p {
+    border: none;
+    font-size: 0.8rem;
+  }
+  .singel-customer {
+    border: 1px solid #f44336;
+    margin: 0.2rem 0.2rem;
+    width: 100%;
+  }
+  .singel-customer:hover {
+    border: 3px solid #f44336;
+  }
+  .singel-my-order:hover {
+    border: 3px solid #f44336;
   }
 `;
 //

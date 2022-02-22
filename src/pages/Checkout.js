@@ -4,7 +4,13 @@ import AdressForm from "../components/AdressForm";
 import { Paper, Stepper, Step, StepLabel } from "@material-ui/core";
 
 const steps = ["Address", "Payment"];
-const Checkout = ({ sendOrderData, setContact, contact, orderId }) => {
+const Checkout = ({
+  sendOrderData,
+  setContact,
+  contact,
+  orderId,
+  calculateDeliveryFee,
+}) => {
   const [activeStep, setActiveStep] = useState(0);
 
   return (
@@ -33,6 +39,7 @@ const Checkout = ({ sendOrderData, setContact, contact, orderId }) => {
         <Stripecheckout
           setActiveStep={setActiveStep}
           sendOrderData={sendOrderData}
+          calculateDeliveryFee={calculateDeliveryFee}
         />
       )}
     </div>

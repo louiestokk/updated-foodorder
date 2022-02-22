@@ -4,4 +4,13 @@ import DashBoard from "./DashBoard";
 import Connect from "./Connect";
 import PrivateRoute from "./PrivateRoute";
 import Home from "./Home";
-export { ErrorPage, Checkout, DashBoard, Connect, PrivateRoute, Home };
+import UserPage from "./UserPage";
+export {
+  ErrorPage,
+  Checkout,
+  DashBoard,
+  Connect,
+  PrivateRoute,
+  Home,
+  UserPage,
+};
