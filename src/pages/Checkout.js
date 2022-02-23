@@ -3,7 +3,7 @@ import Stripecheckout from "../components/Stripecheckout";
 import AdressForm from "../components/AdressForm";
 import { Paper, Stepper, Step, StepLabel } from "@material-ui/core";
 
-const steps = ["Address", "Payment"];
+const steps = ["Payment", "Address"];
 const Checkout = ({
   sendOrderData,
   setContact,
@@ -38,8 +38,8 @@ const Checkout = ({
       {activeStep === 1 && (
         <Stripecheckout
           setActiveStep={setActiveStep}
-          sendOrderData={sendOrderData}
           calculateDeliveryFee={calculateDeliveryFee}
+          sendOrderData={sendOrderData}
         />
       )}
     </div>
@@ -47,3 +47,4 @@ const Checkout = ({
 };
 
 export default Checkout;
+// byt så man betalar först och sen address

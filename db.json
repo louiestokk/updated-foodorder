@@ -4,147 +4,47 @@
   "reg_business": [],
   "new_order": [
     {
-      "contact": {
-        "name": "louie stokk",
-        "address": "hisingsgsta n10",
-        "area": "Göteborg",
-        "hotel": "none",
-        "phone": "0317539060",
-        "email": "louiealsaffar@gmail.com",
-        "explain": "none"
-      },
-      "orderid": 914340,
-      "productsids": [
-        "prod_A12JwrBzgvwPjn",
-        "prod_p6dP5gpBdYln7k",
-        "prod_7ZAMo1LEWxwNJ4",
-        "prod_NXELwjdM2r53A4",
-        "prod_gvRjwOVO2Zl4mN"
-      ],
-      "order": {
-        "item": [
-          "Water 1.5l",
-          "Cheese dip",
-          "Vegan Bowl",
-          "Half Chicken Meal",
-          "Pizza Chicken"
-        ],
-        "quan": [
-          1,
-          1,
-          1,
-          1,
-          2
-        ]
-      },
-      "storeid": [
-        1002,
-        1003,
-        1001
-      ],
-      "storeemails": [
-        "louiealsaffar@gmail.com",
-        "louiealsaffar@gmail.com",
-        "louiestokk@gmail.com"
-      ],
-      "storename": [
-        "Fast Food Paje",
-        "Pizza Delight",
-        "Mr Bowl"
-      ],
-      "amount": {
-        "order": 40.7,
-        "delivery_fee": 2.5
-      },
-      "id": 1
-    },
-    {
-      "contact": {
-        "name": "Maria",
-        "address": "test vägen 22",
-        "area": "Stockholm",
-        "hotel": "none",
-        "phone": "08556655",
-        "email": "louiealsaffar@gmail.com",
-        "explain": "none"
-      },
-      "orderid": 314166,
-      "productsids": [
-        "prod_A12JwrBzgvwPjn",
-        "prod_p6dP5gpBdYln7k",
-        "prod_7ZAMo1LEWxwNJ4",
-        "prod_NXELwjdM2r53A4",
-        "prod_gvRjwOVO2Zl4mN"
-      ],
-      "order": {
-        "item": [
-          "Water 1.5l",
-          "Cheese dip",
-          "Vegan Bowl",
-          "Half Chicken Meal",
-          "Pizza Chicken"
-        ],
-        "quan": [
-          1,
-          1,
-          1,
-          1,
-          2
-        ]
-      },
-      "storeid": [
-        1002,
-        1003,
-        1001
-      ],
-      "storeemails": [
-        "louiealsaffar@gmail.com",
-        "louiealsaffar@gmail.com",
-        "louiestokk@gmail.com"
-      ],
-      "storename": [
-        "Fast Food Paje",
-        "Pizza Delight",
-        "Mr Bowl"
-      ],
-      "amount": {
-        "order": 40.7,
-        "delivery_fee": 2.5
-      },
+      "picked": true,
       "id": 2
     },
     {
       "contact": {
-        "name": "Bosse",
-        "address": "hejhejvägen 4",
-        "area": "Malmö",
+        "name": "loiue",
+        "address": "Luukman restaurant",
+        "area": "Stonw town",
         "hotel": "none",
-        "phone": "0707666666",
+        "phone": "2823728328",
         "email": "louiealsaffar@gmail.com",
-        "explain": "none"
+        "explain": "call me when outside luukmman and im there in 1 min"
       },
-      "orderid": 118791,
+      "orderid": 126297,
+      "picked": false,
+      "delivered": false,
+      "canceled": false,
       "productsids": [
-        "prod_A12JwrBzgvwPjn",
-        "prod_p6dP5gpBdYln7k",
         "prod_7ZAMo1LEWxwNJ4",
-        "prod_NXELwjdM2r53A4",
-        "prod_gvRjwOVO2Zl4mN"
+        "prod_mOVKl4GAKN5prR",
+        "prod_p6dP5gpBdYln7k",
+        "prod_bO6J5a87vVoEjp",
+        "prod_A12JwrBzgvwPjn",
+        "prod_L1vOoZdOLWlRa8"
       ],
       "order": {
         "item": [
-          "Water 1.5l",
-          "Cheese dip",
           "Vegan Bowl",
-          "Half Chicken Meal",
-          "Pizza Chicken"
+          "Pizza Margarita",
+          "Cheese dip",
+          "Fanta 50cl",
+          "Water 1.5l",
+          "Sausage and Fries"
         ],
         "quan": [
           1,
           1,
           1,
           1,
-          2
+          1,
+          1
         ]
       },
       "storeid": [
@@ -163,7 +63,7 @@
         "Mr Bowl"
       ],
       "amount": {
-        "order": 40.7,
+        "order": 26.5,
         "delivery_fee": 2.5
       },
       "id": 3

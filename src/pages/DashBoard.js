@@ -23,7 +23,7 @@ const DashBoard = () => {
   const [showNewItemInput, setShowNewItemInput] = useState(false);
   const [sent, setSent] = useState(false);
   const [myOrders, setMyOrders] = useState([]);
-  const [customers, setCustomers] = useState();
+
   const form = useRef();
   const {
     category,
@@ -116,14 +116,22 @@ const DashBoard = () => {
   const allmyorderditemsid = firstArray.filter((el) =>
     secondArray[0].includes(el)
   );
-  // nedan ger summan på 1 i en array
+  // nedan ger summan på  i en array
   const pricefortheitem = products
     .filter((el) => allmyorderditemsid.includes(el.id))
     .map((el) => el.price.raw);
   const myTotal = pricefortheitem.map(
     (el) => el * allmyorderditemsid.length
   )[0];
-
+  const changeOrderStatus = async (id) => {
+    try {
+      const data = await axios.put(`http://localhost:3000/new_order/${id}/`, {
+        picked: true,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <Wrapper>
       <div className={showDash ? "dash-menu show" : "dash-menu"}>
@@ -458,7 +466,7 @@ const DashBoard = () => {
               {myOrders ? (
                 <div className="my-orders">
                   {myOrders.map((el) => {
-                    const { amount, contact, order, orderid } = el;
+                    const { amount, contact, order, orderid, id } = el;
 
                     return (
                       <div key={orderid} className="singel-my-order">
@@ -482,7 +490,10 @@ const DashBoard = () => {
                         </div>
                         <div className="singel-order-btn">
                           <button type="button">Cancel order</button>
-                          <button type="button">
+                          <button
+                            type="button"
+                            onClick={() => changeOrderStatus(id)}
+                          >
                             <MdFastfood /> Delivered
                           </button>
                         </div>

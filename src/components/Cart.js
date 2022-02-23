@@ -68,6 +68,8 @@ const Cart = () => {
           explain: contact.explain,
         },
         orderid: orderId,
+        picked: false,
+        delivered: false,
         productsids: cart.line_items.map((el) => el.product_id),
         order: {
           item: cart.line_items.map((el) => el.name),
@@ -155,7 +157,10 @@ const Cart = () => {
           <button
             type="button"
             className="pay-btn"
-            onClick={() => setShowCheckout(!showCheckout)}
+            onClick={(e) => {
+              setShowCheckout(!showCheckout);
+              e.currentTarget.style.display = "none";
+            }}
           >
             Pay ${cart.subtotal && cart.subtotal.raw + calculateDeliveryFee()}
           </button>

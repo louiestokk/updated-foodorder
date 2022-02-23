@@ -8,15 +8,14 @@ const AdressForm = ({
   setActiveStep,
   contact,
   setContact,
-  sendOrderData,
   orderId,
+  sendOrderData,
 }) => {
   const form = useRef();
   const { user } = useUserContext();
   const { cart } = useProductsContext();
-  console.log(user.email);
-  const sendEmail = (e) => {
-    e.preventDefault();
+
+  const sendEmail = () => {
     emailjs
       .sendForm(
         "service_4kw1opn",
@@ -38,7 +37,7 @@ const AdressForm = ({
 
   return (
     <Wrapper>
-      <form ref={form}>
+      <form ref={form} onSubmit={(e) => e.preventDefault()}>
         <input
           type="text"
           name="orderId"
@@ -106,11 +105,9 @@ const AdressForm = ({
         <button
           type="submit"
           onClick={(e) => {
-            setActiveStep(1);
-            e.preventDefault();
-            sendOrderData(e);
-            localStorage.setItem("zanzifoodOrder", orderId);
             sendEmail(e);
+            setActiveStep(1);
+            sendOrderData();
           }}
         >
           Next <MdKeyboardArrowRight className="icon" />
