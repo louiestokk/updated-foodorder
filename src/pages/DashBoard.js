@@ -13,7 +13,7 @@ import { MdFastfood } from "react-icons/md";
 import { useProductsContext } from "../context/products_context";
 import axios from "axios";
 import { restaurants } from "../utils/data";
-const DashBoard = () => {
+const DashBoard = ({ orderPickedUp, setOrderPickedUp }) => {
   const { usersBusiness, logout, user } = useUserContext();
   const { products } = useProductsContext();
   const [showDash, setShowDash] = useState(false);
@@ -43,7 +43,7 @@ const DashBoard = () => {
     days,
     offer,
     offerdate,
-  } = usersBusiness[0];
+  } = usersBusiness[0] || usersBusiness;
 
   const [businessdata, setbusinessdata] = useState({
     bsname: name,
@@ -77,7 +77,7 @@ const DashBoard = () => {
       setSent(false);
     }, 6000);
   };
-  const bsProducts = products.filter((el) => menu.includes(el.id));
+  const bsProducts = products.filter((el) => menu && menu.includes(el.id));
 
   useEffect(() => {
     document.querySelectorAll(".dashBtn").forEach((btn) => {
@@ -107,7 +107,7 @@ const DashBoard = () => {
   useEffect(() => {
     fecthOrders();
   }, []);
-  // för varje order behöver jag kolla vilken han e hans och räkna ut priset så skall lägg ain i ordern produkt id så att sen så kan jag filterar på id från ordern och kunden menu
+
   const firstArray = [].concat(...myOrders.map((el) => el.productsids));
   const secondArray = restaurants
     .filter((el) => el.email === user.email)
@@ -123,15 +123,23 @@ const DashBoard = () => {
   const myTotal = pricefortheitem.map(
     (el) => el * allmyorderditemsid.length
   )[0];
+
   const changeOrderStatus = async (id) => {
     try {
+      const orders = await axios(`http://localhost:3000/new_order/${id}/`);
+
       const data = await axios.put(`http://localhost:3000/new_order/${id}/`, {
+        ...orders.data,
         picked: true,
       });
     } catch (error) {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    document.querySelectorAll(".singel-my-order").forEach((order) => {});
+  }, []);
   return (
     <Wrapper>
       <div className={showDash ? "dash-menu show" : "dash-menu"}>
@@ -466,10 +474,13 @@ const DashBoard = () => {
               {myOrders ? (
                 <div className="my-orders">
                   {myOrders.map((el) => {
-                    const { amount, contact, order, orderid, id } = el;
-
+                    const { picked, contact, order, orderid, id } = el;
                     return (
-                      <div key={orderid} className="singel-my-order">
+                      <div
+                        key={orderid}
+                        className="singel-my-order"
+                        style={{ opacity: picked && "0.5" }}
+                      >
                         <h4>OrderId: {orderid}</h4>
                         <div
                           style={{
@@ -488,15 +499,23 @@ const DashBoard = () => {
                           <h5>Items: {order.item}</h5>
                           <h5>Quantity: {order.quan}</h5>
                         </div>
-                        <div className="singel-order-btn">
-                          <button type="button">Cancel order</button>
-                          <button
-                            type="button"
-                            onClick={() => changeOrderStatus(id)}
-                          >
-                            <MdFastfood /> Delivered
-                          </button>
-                        </div>
+                        {picked ? (
+                          "Order picked"
+                        ) : (
+                          <div className="singel-order-btn">
+                            <button type="button">Cancel order</button>
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                changeOrderStatus(id);
+                                e.currentTarget.parentElement.style.display =
+                                  "none";
+                              }}
+                            >
+                              <MdFastfood /> Picked Up
+                            </button>
+                          </div>
+                        )}
                       </div>
                     );
                   })}
@@ -698,6 +717,9 @@ const Wrapper = styled.section`
   }
   .singel-my-order:hover {
     border: 3px solid #f44336;
+  }
+  .pick {
+    color: green;
   }
 `;
 //

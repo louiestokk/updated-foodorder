@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import SingelRestaurant from "./components/Restaurant/SingelRestaurant/SingelRestaurant";
@@ -13,6 +13,7 @@ import {
   UserPage,
 } from "./pages";
 function App() {
+  const [orderPickedUp, setorderPickedUp] = useState(true);
   const { user } = useUserContext();
   // const fetchRestaurants = async () => {
   //   try {
@@ -41,7 +42,10 @@ function App() {
           exact
           element={
             <PrivateRoute>
-              <UserPage />
+              <UserPage
+                orderPickedUp={orderPickedUp}
+                setorderPickedUp={setorderPickedUp}
+              />
             </PrivateRoute>
           }
         />
@@ -51,7 +55,10 @@ function App() {
             exact
             element={
               <PrivateRoute>
-                <DashBoard />
+                <DashBoard
+                  orderPickedUp={orderPickedUp}
+                  setorderPickedUp={setorderPickedUp}
+                />
               </PrivateRoute>
             }
           />

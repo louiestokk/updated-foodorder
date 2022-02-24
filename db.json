@@ -4,10 +4,6 @@
   "reg_business": [],
   "new_order": [
     {
-      "picked": true,
-      "id": 2
-    },
-    {
       "contact": {
         "name": "loiue",
         "address": "Luukman restaurant",
@@ -17,8 +13,8 @@
         "email": "louiealsaffar@gmail.com",
         "explain": "call me when outside luukmman and im there in 1 min"
       },
-      "orderid": 126297,
-      "picked": false,
+      "orderid": 144297,
+      "picked": true,
       "delivered": false,
       "canceled": false,
       "productsids": [
@@ -67,6 +63,67 @@
         "delivery_fee": 2.5
       },
       "id": 3
+    },
+    {
+      "contact": {
+        "name": "loiue",
+        "address": "Luukman restaurant",
+        "area": "Stonw town",
+        "hotel": "none",
+        "phone": "2823728328",
+        "email": "louiealsaffar@gmail.com",
+        "explain": "call me when outside luukmman and im there in 1 min"
+      },
+      "orderid": 126297,
+      "picked": true,
+      "delivered": false,
+      "canceled": false,
+      "productsids": [
+        "prod_7ZAMo1LEWxwNJ4",
+        "prod_mOVKl4GAKN5prR",
+        "prod_p6dP5gpBdYln7k",
+        "prod_bO6J5a87vVoEjp",
+        "prod_A12JwrBzgvwPjn",
+        "prod_L1vOoZdOLWlRa8"
+      ],
+      "order": {
+        "item": [
+          "Vegan Bowl",
+          "Pizza Margarita",
+          "Cheese dip",
+          "Fanta 50cl",
+          "Water 1.5l",
+          "Sausage and Fries"
+        ],
+        "quan": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "storeid": [
+        1002,
+        1003,
+        1001
+      ],
+      "storeemails": [
+        "louiealsaffar@gmail.com",
+        "louiealsaffar@gmail.com",
+        "louiestokk@gmail.com"
+      ],
+      "storename": [
+        "Fast Food Paje",
+        "Pizza Delight",
+        "Mr Bowl"
+      ],
+      "amount": {
+        "order": 26.5,
+        "delivery_fee": 2.5
+      },
+      "id": 2
     }
   ]
 }
