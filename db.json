@@ -10,7 +10,7 @@
         "area": "Stonw town",
         "hotel": "none",
         "phone": "2823728328",
-        "email": "louiealsaffar@gmail.com",
+        "email": "louiestokk@gmail.com",
         "explain": "call me when outside luukmman and im there in 1 min"
       },
       "orderid": 144297,
@@ -34,30 +34,15 @@
           "Water 1.5l",
           "Sausage and Fries"
         ],
-        "quan": [
-          1,
-          1,
-          1,
-          1,
-          1,
-          1
-        ]
+        "quan": [1, 1, 1, 1, 1, 1]
       },
-      "storeid": [
-        1002,
-        1003,
-        1001
-      ],
+      "storeid": [1002, 1003, 1001],
       "storeemails": [
         "louiealsaffar@gmail.com",
         "louiealsaffar@gmail.com",
         "louiestokk@gmail.com"
       ],
-      "storename": [
-        "Fast Food Paje",
-        "Pizza Delight",
-        "Mr Bowl"
-      ],
+      "storename": ["Fast Food Paje", "Pizza Delight", "Mr Bowl"],
       "amount": {
         "order": 26.5,
         "delivery_fee": 2.5
@@ -71,7 +56,7 @@
         "area": "Stonw town",
         "hotel": "none",
         "phone": "2823728328",
-        "email": "louiealsaffar@gmail.com",
+        "email": "louiestokk@gmail.com",
         "explain": "call me when outside luukmman and im there in 1 min"
       },
       "orderid": 126297,
@@ -95,30 +80,15 @@
           "Water 1.5l",
           "Sausage and Fries"
         ],
-        "quan": [
-          1,
-          1,
-          1,
-          1,
-          1,
-          1
-        ]
+        "quan": [1, 1, 1, 1, 1, 1]
       },
-      "storeid": [
-        1002,
-        1003,
-        1001
-      ],
+      "storeid": [1002, 1003, 1001],
       "storeemails": [
         "louiealsaffar@gmail.com",
         "louiealsaffar@gmail.com",
         "louiestokk@gmail.com"
       ],
-      "storename": [
-        "Fast Food Paje",
-        "Pizza Delight",
-        "Mr Bowl"
-      ],
+      "storename": ["Fast Food Paje", "Pizza Delight", "Mr Bowl"],
       "amount": {
         "order": 26.5,
         "delivery_fee": 2.5

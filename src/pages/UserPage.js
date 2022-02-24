@@ -10,7 +10,6 @@ const UserPage = () => {
   const [orders, setOrders] = useState([]);
   const [userOrders, setUsersOrders] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [activeOrder, setactiveOrder] = useState(true);
   const fetchOrders = async () => {
     setLoading(true);
     try {
@@ -51,6 +50,7 @@ const UserPage = () => {
               storeemails,
               storeid,
               storename,
+              picked,
             } = item;
             return (
               <div key={ind} className="singel-order">
@@ -70,7 +70,7 @@ const UserPage = () => {
                 <h4 style={{ display: "flex", alignItems: "center" }}>
                   Delivery status:
                   <p style={{ color: "green", marginLeft: "0.2rem" }}>
-                    {activeOrder ? "On the way" : "Delivered"}
+                    {picked ? "Picked up by delivery" : "The chef prepares"}
                   </p>
                 </h4>
               </div>
