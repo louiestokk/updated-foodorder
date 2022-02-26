@@ -14,6 +14,7 @@ const ProductsProvider = ({ children }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [error, setError] = useState(false);
   const [added, setAdded] = useState(false);
+  const [order, setOrder] = useState([]);
   const fetchProducts = async (query) => {
     try {
       setLoading(true);
@@ -84,6 +85,8 @@ const ProductsProvider = ({ children }) => {
         refreshCart,
         added,
         setAdded,
+        order,
+        setOrder,
       }}
     >
       {children}

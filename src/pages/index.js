@@ -5,6 +5,7 @@ import Connect from "./Connect";
 import PrivateRoute from "./PrivateRoute";
 import Home from "./Home";
 import UserPage from "./UserPage";
+import Confirmation from "./Confirmation";
 export {
   ErrorPage,
   Checkout,
@@ -13,4 +14,5 @@ export {
   PrivateRoute,
   Home,
   UserPage,
+  Confirmation,
 };

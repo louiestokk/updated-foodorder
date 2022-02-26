@@ -78,7 +78,7 @@ const CheckoutForm = ({ calculateDeliveryFee, sendOrderData }) => {
       setSucceeded(true);
       sendOrderData();
       setTimeout(() => {
-        navigate("/");
+        navigate("/confirmation");
       }, 7000);
     }
   };
@@ -99,7 +99,7 @@ const CheckoutForm = ({ calculateDeliveryFee, sendOrderData }) => {
         >
           <h4>Thank you</h4>
           <h4>Your paymennt was successful!</h4>
-          <h4>Redirecting to home page shortly</h4>
+          {/* <h4>Redirecting to home page shortly</h4> */}
         </article>
       ) : (
         <article

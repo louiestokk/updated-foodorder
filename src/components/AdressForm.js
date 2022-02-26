@@ -13,7 +13,7 @@ const AdressForm = ({
 }) => {
   const form = useRef();
   const { user } = useUserContext();
-  const { cart } = useProductsContext();
+  const { cart, order, setOrder } = useProductsContext();
 
   const sendEmail = () => {
     emailjs
@@ -21,7 +21,7 @@ const AdressForm = ({
         "service_4kw1opn",
         "template_h32mvfs",
         form.current,
-        "user_vErATX9GYURJuxCrMM6NM"
+        process.env.REACT_APP_EMAILJ_USER_ID_2
       )
       .then(
         (result) => {
@@ -105,9 +105,10 @@ const AdressForm = ({
         <button
           type="submit"
           onClick={(e) => {
-            sendEmail(e);
+            // sendEmail(e);
             setActiveStep(1);
-            sendOrderData();
+            // sendOrderData();
+            setOrder(Array.from(e.target.parentElement.elements));
           }}
         >
           Next <MdKeyboardArrowRight className="icon" />

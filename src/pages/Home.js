@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Restaurants from "../components/Restaurant/Restaurants";
 import styled from "styled-components";
 import Navbar from "../components/Navbar";

@@ -27,7 +27,7 @@ const UserPage = () => {
   useEffect(() => {
     fetchOrders();
   }, []);
-
+  console.log(userOrders);
   return (
     <Wrapper>
       <div className="info">
