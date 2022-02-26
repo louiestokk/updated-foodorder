@@ -37,7 +37,7 @@ export const restaurants = [
 
     number: "+255 000 000",
     type: "Fast Food",
-    email: "louiealsaffar@gmail.com",
+    email: "mzeemm1982@gmail.com",
     open: 10,
     close: 1,
   },
