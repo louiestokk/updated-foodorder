@@ -5,6 +5,6 @@ export const drivers = [
     whatsup: "+255000000",
     driverid: "001",
     // email: "zanzifooddelivery@gmail.com",
-    email: "louiealsaffar@gmail.com",
+    email: "zanzifooddelivery@gmail.com",
   },
 ];

@@ -1,0 +1,44 @@
+@import "../../../utils//colors.scss";
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+input {
+  width: 12rem;
+  margin: 0.3rem 0;
+  border-radius: 4px 4px;
+  border: none;
+  height: 1.3rem;
+}
+select {
+  width: 12rem;
+  height: 1.3rem;
+  margin: 0.3rem 0;
+  background: white;
+  border-radius: 4px 4px;
+  border: none;
+}
+.sent {
+  background: $primary-color;
+  color: white;
+  height: 400px;
+  text-align: center;
+  margin: 0 auto;
+}
+.sent p {
+  max-width: 300px;
+  margin: 1rem auto;
+}
+
+.singel-order {
+  background: white;
+  color: $primary-color;
+}
+.singel-order p {
+  color: black;
+  font-size: 0.8rem;
+  max-width: 330px;
+}

@@ -101,7 +101,7 @@
         "explain": "call me when outside luukmman and im there in 1 min"
       },
       "orderid": 126297,
-      "picked": true,
+      "picked": false,
       "delivered": false,
       "canceled": false,
       "productsids": [

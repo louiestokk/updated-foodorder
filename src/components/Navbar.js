@@ -37,13 +37,11 @@ const Navbar = () => {
         ZanziFood 🍕
       </h1>
       <div style={{ display: "flex", alignItems: "center" }}>
-        {
-          <button onClick={() => navigate("/cart")}>
-            <Badge badgeContent={cart.total_items}>
-              <ShoppingBasket style={{ color: "white" }} />
-            </Badge>
-          </button>
-        }
+        <div onClick={() => navigate("/cart")}>
+          <Badge badgeContent={cart.total_items}>
+            <ShoppingBasket style={{ color: "white" }} />
+          </Badge>
+        </div>
 
         {!isAuthenticated && (
           <button
@@ -54,7 +52,11 @@ const Navbar = () => {
             type="button"
           >
             <span
-              style={{ fontSize: "0.8rem", borderBottom: "1px solid white" }}
+              style={{
+                fontSize: "0.8rem",
+                borderBottom: "1px solid white",
+                margin: "0",
+              }}
             >
               Login
             </span>
@@ -81,7 +83,6 @@ const Wrapper = styled.nav`
   button {
     background: transparent;
     color: white;
-    margin-right: 1rem;
   }
   span {
     font-size: 0.7rem;
@@ -108,7 +109,7 @@ const Wrapper = styled.nav`
     color: red;
   }
   a {
-    margin-right: 0.5rem;
+    margin: 0rem 0.75rem;
     color: white;
     font-size: 0.9rem;
     font-family: "Righteous", cursive;
