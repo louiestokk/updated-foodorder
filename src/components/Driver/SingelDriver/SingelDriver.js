@@ -1,15 +1,18 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./SingelDriver.scss";
 import { drivers } from "../../../utils/drivers";
 import { useUserContext } from "../../../context/user_context";
 import emailjs from "@emailjs/browser";
 import { Link } from "react-router-dom";
+import axios from "axios";
 const SingelDriver = ({ orders, delivered, setDelivered }) => {
   const { user } = useUserContext();
+  const [showDelivered, setShowDelivered] = useState(false);
+  const [myActiveOrders, setMyActiveOrders] = useState([]);
   const [driver, setDriver] = useState(
     drivers.filter((el) => el.email === user.email)
   );
-  const activeorders = orders.filter((el) => el.picked !== true);
+  let activeorders = orders.filter((el) => el.picked !== true);
   const form = useRef();
   const [sent, setSent] = useState(false);
   const applyAsDriver = (e) => {
@@ -32,6 +35,47 @@ const SingelDriver = ({ orders, delivered, setDelivered }) => {
         }
       );
   };
+  const fetchMyActiveOrders = async () => {
+    try {
+      const { data } = await axios(
+        `http://localhost:3000/${driver[0].driverid}/`
+      );
+      setMyActiveOrders(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleTakeOrder = async (id, orderid) => {
+    try {
+      const orders = await axios(`http://localhost:3000/new_order/${id}/`);
+      const driversorder = await axios.post(
+        `http://localhost:3000/${driver[0].driverid}`,
+        {
+          orderid,
+        }
+      );
+      const data = await axios.put(`http://localhost:3000/new_order/${id}/`, {
+        ...orders.data,
+        driver: driver,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const orderDelivered = async (id) => {
+    try {
+      const orders = await axios(`http://localhost:3000/new_order/${id}/`);
+      const data = await axios.put(`http://localhost:3000/new_order/${id}/`, {
+        ...orders.data,
+        delivered: true,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    fetchMyActiveOrders();
+  });
   return (
     <>
       {sent && (
@@ -46,15 +90,23 @@ const SingelDriver = ({ orders, delivered, setDelivered }) => {
       )}
       {!sent && (
         <div className="root">
+          <h2 style={{ color: "white", marginBottom: "1rem" }}>
+            Welcome {user.nickname}
+          </h2>
           {driver.length > 0 ? (
             <div className="driver">
-              <h2 style={{ color: "black" }}>Welcome {user.nickname}</h2>
-              <div>
-                <h4>Active orders</h4>
+              <div className="orders">
+                <h4 style={{ color: "black", marginBottom: "0.2rem" }}>
+                  Orders
+                </h4>
                 {activeorders.map((ord) => {
                   const { id, orderid, order, storename, contact } = ord;
                   return (
-                    <div key={id} className="singel-order">
+                    <div
+                      key={id}
+                      className="singel-order"
+                      style={{ opacity: ord.delivered && "0.5" }}
+                    >
                       <h4>orderId: {orderid}</h4>
                       <h4>restaurants: {storename.map((el) => `${el}, `)}</h4>
                       <p>
@@ -81,10 +133,70 @@ const SingelDriver = ({ orders, delivered, setDelivered }) => {
                           <strong>Message:</strong> {contact.explain}
                         </p>
                       </div>
-                      <button type="button">take order</button>
+                      {!ord.driver && (
+                        <button
+                          style={{ display: ord.driver && "none" }}
+                          type="button"
+                          onClick={(e) => {
+                            handleTakeOrder(id, orderid);
+                            setShowDelivered(!showDelivered);
+                            e.target.style.display = "none";
+                            fetchMyActiveOrders();
+                          }}
+                        >
+                          Take order
+                        </button>
+                      )}
+
+                      {!ord.delivered ||
+                        (showDelivered && (
+                          <button
+                            type="button"
+                            onClick={() => {
+                              orderDelivered(id);
+                              setShowDelivered(!showDelivered);
+                            }}
+                          >
+                            Delivered
+                          </button>
+                        ))}
                     </div>
                   );
                 })}
+              </div>
+              <div className="my-act-ord">
+                <h4>Your active orders</h4>
+
+                <div>
+                  {myActiveOrders.map((el) => {
+                    return (
+                      <ul key={el.id}>
+                        <li>
+                          <div>
+                            {orders
+                              .filter((or) => or.orderid === el.orderid)
+                              .map((el) => {
+                                const { orderid, storename, contact } = el;
+                                return (
+                                  <div
+                                    key={orderid}
+                                    style={{ display: el.delivered && "none" }}
+                                  >
+                                    <h4 style={{ color: "red" }}>{orderid}</h4>
+                                    <p>{contact.name.toUpperCase()}</p>
+                                    <p>{`${storename},  `}</p>
+                                  </div>
+                                );
+                              })}
+                          </div>
+                        </li>
+                      </ul>
+                    );
+                  })}
+                </div>
+              </div>
+              <div className="my-act-ord">
+                <h4>My completed orders</h4>
               </div>
             </div>
           ) : (

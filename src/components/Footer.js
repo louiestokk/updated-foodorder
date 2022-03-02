@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { BsFillArrowRightCircleFill } from "react-icons/bs";
 import { BsFillArrowLeftCircleFill } from "react-icons/bs";
 import { useLocation } from "react-router-dom";
+import { MdMoped } from "react-icons/md";
 const Footer = () => {
   const location = useLocation();
   return (
@@ -15,14 +16,27 @@ const Footer = () => {
             Connect your business
             <BsFillArrowLeftCircleFill className="bsicon" />
           </Link>
+          <Link
+            to="/delivery"
+            className="link"
+            style={{
+              marginBottom: "1rem",
+            }}
+          >
+            <h4>Drivers</h4>
+            <MdMoped className="bsicon" />
+          </Link>
         </div>
       )}
-      <div style={{ marginTop: "1rem" }}>
+      <div
+        style={{ marginTop: "0.3rem", display: "flex", alignItems: "center " }}
+      >
         <h4>ZanziFood 🍕</h4>
+        <p className="ya">
+          &copy; {new Date().getFullYear()} All rights reserved Stokk Tech
+          Limited
+        </p>
       </div>
-      <p className="ya">
-        &copy; {new Date().getFullYear()} All rights reserved Stokk Tech Limited
-      </p>
     </Wrapper>
   );
 };
@@ -51,6 +65,11 @@ const Wrapper = styled.footer`
     width: 100%;
     align-items: center;
     display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+  .link span {
+    font-size: 0.9rem;
   }
 
   .bsicon {
