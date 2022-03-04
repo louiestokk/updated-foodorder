@@ -27,7 +27,7 @@ const UserPage = () => {
   useEffect(() => {
     fetchOrders();
   }, []);
-  console.log(userOrders);
+
   return (
     <Wrapper>
       <div className="info">
@@ -41,6 +41,7 @@ const UserPage = () => {
       {loading && <BallTriangle />}
       {!loading && (
         <div className="order">
+          <h4>Your orders</h4>
           {userOrders.map((item, ind) => {
             const {
               amount,
@@ -51,7 +52,10 @@ const UserPage = () => {
               storeid,
               storename,
               picked,
+              delivered,
+              driver,
             } = item;
+
             return (
               <div key={ind} className="singel-order">
                 <h4>Order: {orderid}</h4>
@@ -67,12 +71,46 @@ const UserPage = () => {
                 <p>
                   <span>Deliver to:</span> {contact.address} in {contact.area}
                 </p>
-                <h4 style={{ display: "flex", alignItems: "center" }}>
-                  Delivery status:
-                  <p style={{ color: "green", marginLeft: "0.2rem" }}>
-                    {picked ? "Picked up by delivery" : "The chef prepares"}
-                  </p>
-                </h4>
+                {!delivered && (
+                  <>
+                    <h4 style={{ display: "flex", alignItems: "center" }}>
+                      Delivery status:
+                      <p
+                        style={{
+                          color: "green",
+                          marginLeft: "0.2rem",
+                          display: delivered && "none",
+                        }}
+                      >
+                        {picked ? "Picked up by delivery" : "The chef prepares"}
+                      </p>
+                    </h4>
+                  </>
+                )}
+                {delivered && (
+                  <div>
+                    <p>
+                      Orderstatus:{" "}
+                      <span style={{ color: "green", fontWeight: "bold" }}>
+                        Delivered
+                      </span>
+                    </p>
+                  </div>
+                )}
+                <div>
+                  <h4>Driver</h4>
+                  {driver.map((person) => {
+                    const { driverid, email, name, whatsup, number } = person;
+                    return (
+                      <div key={driverid} className="driver">
+                        <p style={{ fontWeight: "bold" }}>Name: {name}</p>
+                        <a href={`tel:${whatsup}`}>Whatsup: {whatsup}</a>
+                        <a href={`tel:${number}`}>Number: {whatsup}</a>
+                        <a href={`mailto:${email}`}>Email: {email}</a>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             );
           })}
@@ -139,5 +177,8 @@ const Wrapper = styled.section`
   }
   .singel-order p {
     max-width: 200px;
+  }
+  .driver {
+    margin-top: 0.2rem;
   }
 `;

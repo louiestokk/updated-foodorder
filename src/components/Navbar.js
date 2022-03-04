@@ -37,7 +37,10 @@ const Navbar = () => {
         ZanziFood 🍕
       </h1>
       <div style={{ display: "flex", alignItems: "center" }}>
-        <div onClick={() => navigate("/cart")}>
+        <div
+          onClick={() => navigate("/cart")}
+          style={{ marginRight: "0.3rem" }}
+        >
           <Badge badgeContent={cart.total_items}>
             <ShoppingBasket style={{ color: "white" }} />
           </Badge>
@@ -55,7 +58,6 @@ const Navbar = () => {
               style={{
                 fontSize: "0.8rem",
                 borderBottom: "1px solid white",
-                margin: "0",
               }}
             >
               Login

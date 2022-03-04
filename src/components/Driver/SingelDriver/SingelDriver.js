@@ -5,10 +5,12 @@ import { useUserContext } from "../../../context/user_context";
 import emailjs from "@emailjs/browser";
 import { Link } from "react-router-dom";
 import axios from "axios";
+
 const SingelDriver = ({ orders, delivered, setDelivered }) => {
   const { user } = useUserContext();
   const [showDelivered, setShowDelivered] = useState(false);
   const [myActiveOrders, setMyActiveOrders] = useState([]);
+  const [completedOrders, setCompletedOrders] = useState([]);
   const [driver, setDriver] = useState(
     drivers.filter((el) => el.email === user.email)
   );
@@ -35,6 +37,7 @@ const SingelDriver = ({ orders, delivered, setDelivered }) => {
         }
       );
   };
+
   const fetchMyActiveOrders = async () => {
     try {
       const { data } = await axios(
@@ -57,11 +60,13 @@ const SingelDriver = ({ orders, delivered, setDelivered }) => {
       const data = await axios.put(`http://localhost:3000/new_order/${id}/`, {
         ...orders.data,
         driver: driver,
+        driveremail: user.email,
       });
     } catch (error) {
       console.log(error);
     }
   };
+
   const orderDelivered = async (id) => {
     try {
       const orders = await axios(`http://localhost:3000/new_order/${id}/`);
@@ -73,9 +78,19 @@ const SingelDriver = ({ orders, delivered, setDelivered }) => {
       console.log(error);
     }
   };
+  const fetchCompletedOrders = async () => {
+    const { data } = await axios("http://localhost:3000/new_order");
+    const mycompletedOrders = data.filter(
+      (el) => el.delivered === true && el.driveremail === user.email
+    );
+    setCompletedOrders(mycompletedOrders);
+  };
   useEffect(() => {
     fetchMyActiveOrders();
-  });
+    fetchCompletedOrders();
+  }, []);
+  console.log(completedOrders);
+  console.log(user.email);
   return (
     <>
       {sent && (
@@ -147,19 +162,6 @@ const SingelDriver = ({ orders, delivered, setDelivered }) => {
                           Take order
                         </button>
                       )}
-
-                      {!ord.delivered ||
-                        (showDelivered && (
-                          <button
-                            type="button"
-                            onClick={() => {
-                              orderDelivered(id);
-                              setShowDelivered(!showDelivered);
-                            }}
-                          >
-                            Delivered
-                          </button>
-                        ))}
                     </div>
                   );
                 })}
@@ -167,36 +169,48 @@ const SingelDriver = ({ orders, delivered, setDelivered }) => {
               <div className="my-act-ord">
                 <h4>Your active orders</h4>
 
-                <div>
+                <ul>
                   {myActiveOrders.map((el) => {
                     return (
-                      <ul key={el.id}>
-                        <li>
-                          <div>
-                            {orders
-                              .filter((or) => or.orderid === el.orderid)
-                              .map((el) => {
-                                const { orderid, storename, contact } = el;
-                                return (
-                                  <div
-                                    key={orderid}
-                                    style={{ display: el.delivered && "none" }}
+                      <li key={el.id}>
+                        <div>
+                          {orders
+                            .filter((or) => or.orderid === el.orderid)
+                            .map((el) => {
+                              const { orderid, storename, contact, id } = el;
+                              return (
+                                <div
+                                  key={orderid}
+                                  style={{ display: el.delivered && "none" }}
+                                >
+                                  <h4 style={{ color: "red" }}>{orderid}</h4>
+                                  <p>{contact.name.toUpperCase()}</p>
+                                  <p>{`${storename}, `}</p>
+                                  <button
+                                    type="button"
+                                    onClick={(e) => {
+                                      orderDelivered(id);
+                                      e.target.style.display = "none";
+                                    }}
                                   >
-                                    <h4 style={{ color: "red" }}>{orderid}</h4>
-                                    <p>{contact.name.toUpperCase()}</p>
-                                    <p>{`${storename},  `}</p>
-                                  </div>
-                                );
-                              })}
-                          </div>
-                        </li>
-                      </ul>
+                                    Delivered
+                                  </button>
+                                </div>
+                              );
+                            })}
+                        </div>
+                      </li>
                     );
                   })}
-                </div>
+                </ul>
               </div>
               <div className="my-act-ord">
                 <h4>My completed orders</h4>
+                <ul>
+                  {completedOrders.map((el, ind) => {
+                    return <li key={ind}>{el.orderid}</li>;
+                  })}
+                </ul>
               </div>
             </div>
           ) : (
