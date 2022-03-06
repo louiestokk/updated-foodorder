@@ -3,10 +3,13 @@ import React from "react";
 import { GiChickenLeg } from "react-icons/gi";
 import { FaPizzaSlice } from "react-icons/fa";
 import { GiCarrot } from "react-icons/gi";
+import { FcShop } from "react-icons/fc";
 import pizza from "./images/pizza.jpg";
 import mainPizza from "./images/pizza-hero.webp";
 import mainFastfood from "./images/ajjemen.jpg";
 import vegan from "./images/Vegan-Buddha-bowl.jpg";
+import supermarket from "./images/supermarket.jpg";
+
 export const restaurants = [
   {
     id: 1001,
@@ -52,7 +55,7 @@ export const restaurants = [
     category: ["Pizza", "Vegan", "Chicken", "Pasta", "Veg", "Burgers", "BBQ"],
     image: pizza,
     mainImage: mainPizza,
-    featured: true,
+    featured: false,
     query: [
       "pizza",
       "pizza margherita",
@@ -80,7 +83,7 @@ export const restaurants = [
     category: ["Veg", "Vegan", "Bowl"],
     image: vegan,
     mainImage: vegan,
-    featured: true,
+    featured: false,
     query: ["vegan", "veg", "vegetarian", "bowl"],
     number: "+255 000 000",
     open: 11,
@@ -91,5 +94,37 @@ export const restaurants = [
     offer: "10%",
     offerdate: "30",
     email: "louiestokk@gmail.com",
+  },
+  {
+    id: 1004,
+    name: "Supermarket",
+    type: "Supermarket",
+    deliverfee: 2.5,
+    icon: <FcShop />,
+    menu: [
+      "prod_A12JwrBzgvwPjn",
+      "prod_VPvL5zY9mGoAQk",
+      "prod_nPEVlN9q605a7d",
+      "prod_9BAmwJrD1QweXd",
+      "prod_mOVKl4GxQM5prR",
+      "prod_ZM8X5nL6G3wpv4",
+    ],
+    location: "Paje",
+    address: "test adress 1",
+    zip: "",
+    category: ["Supermarket"],
+    image: supermarket,
+    mainImage: supermarket,
+    featured: true,
+    query: ["shop", "market", "supermarket"],
+    number: "+255 000 000",
+    open: 9,
+    close: 0,
+    loid: "",
+    active: true,
+    days: "All",
+    offer: "",
+    offerdate: "",
+    email: "",
   },
 ];

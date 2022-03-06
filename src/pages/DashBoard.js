@@ -199,7 +199,8 @@ const DashBoard = ({ orderPickedUp, setOrderPickedUp }) => {
             margin: "0.5rem 0.5rem",
             background: "transparent",
             color: "white",
-            borderBottom: "1px solid white",
+            border: "1px solid white",
+            width: "4rem",
           }}
         >
           Logout
@@ -460,7 +461,10 @@ const DashBoard = ({ orderPickedUp, setOrderPickedUp }) => {
               <p>Billing</p>
             </div>
             <div className="billing">
-              <h4 style={{ color: "black" }}>Total sales: ${myTotal}</h4>
+              <h4 style={{ color: "black" }}>
+                Total sales: <span>${myTotal}</span> Order:{" "}
+                <span>{`${myOrders.map((el) => el.orderid)}, `}</span>
+              </h4>
             </div>
           </div>
         )}
@@ -474,7 +478,16 @@ const DashBoard = ({ orderPickedUp, setOrderPickedUp }) => {
               {myOrders ? (
                 <div className="my-orders">
                   {myOrders.map((el) => {
-                    const { picked, contact, order, orderid, id } = el;
+                    const {
+                      picked,
+                      contact,
+                      order,
+                      orderid,
+                      id,
+                      delivered,
+                      driver,
+                    } = el;
+                    console.log(driver);
                     return (
                       <div
                         key={orderid}
@@ -496,11 +509,38 @@ const DashBoard = ({ orderPickedUp, setOrderPickedUp }) => {
                           <h5 style={{ color: "black" }}>
                             Restaurant: {el.storename.map((el) => `${el}, `)}
                           </h5>
-                          <h5>Items: {order.item}</h5>
-                          <h5>Quantity: {order.quan}</h5>
+                          <h5 style={{ color: "black" }}>
+                            Items: <span> {`${order.item}, `}</span>
+                          </h5>
+                          <h5>
+                            Quantity: <span>{`${order.quan}, `}</span>{" "}
+                          </h5>
+                          <div
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                            }}
+                          >
+                            <h5 style={{ marginRight: "0.2rem" }}> Driver:</h5>
+                            {driver.map((el, ind) => {
+                              return (
+                                <span
+                                  key={ind}
+                                  style={{ color: "black", fontSize: "0.8rem" }}
+                                >
+                                  {el.name}, {el.number}
+                                </span>
+                              );
+                            })}
+                          </div>
                         </div>
                         {picked ? (
-                          "Order picked"
+                          delivered ? (
+                            "Delivered"
+                          ) : (
+                            "Order picked"
+                          )
                         ) : (
                           <div className="singel-order-btn">
                             <button type="button">Cancel order</button>
@@ -510,6 +550,7 @@ const DashBoard = ({ orderPickedUp, setOrderPickedUp }) => {
                                 changeOrderStatus(id);
                                 e.currentTarget.parentElement.style.display =
                                   "none";
+                                fecthOrders();
                               }}
                             >
                               <MdFastfood /> Picked Up
@@ -535,6 +576,7 @@ const DashBoard = ({ orderPickedUp, setOrderPickedUp }) => {
             {myOrders.length > 0 ? (
               <div className="my-customers">
                 {myOrders.map((el) => {
+                  console.log(el);
                   const { name, email, phone } = el.contact;
                   return (
                     <div key={el.orderid} className="singel-customer">

@@ -60,7 +60,6 @@ const Filter = () => {
                   color: "white",
                   textTransform: "capitalize",
                   marginLeft: "1.2rem",
-                  borderBottom: "1px solid white",
                   display: showLocation ? "block" : "none",
                 }}
                 onClick={filterLocation}
@@ -109,7 +108,6 @@ const Wrapper = styled.div`
   .categories {
     display: flex;
     justify-content: center;
-
     margin-top: 1rem;
     flex-wrap: wrap;
   }
@@ -121,15 +119,15 @@ const Wrapper = styled.div`
     max-width: 700px;
     border-radius: 5px 5px;
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-    overflow: hidden;
+    overflow-y: scroll;
     transition: all 0.3s linear;
   }
   .cat-btn {
     background: white;
-    width: 5rem;
+    width: 7rem;
     height: 1.8rem;
     border-radius: 5px 5px;
-    margin-top: 0.5rem;
+    margin-top: 0.1rem;
     margin-right: 0.2rem;
     color: #f44336;
     letter-spacing: 1px;

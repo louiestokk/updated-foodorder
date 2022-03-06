@@ -5,10 +5,9 @@ import { useProductsContext } from "../../context/products_context";
 import { Oval } from "react-loader-spinner";
 
 const Restaurants = () => {
-  const { business } = useProductsContext();
+  const { business, products } = useProductsContext();
   const navigate = useNavigate();
-  const test = new Date().getHours();
-
+  console.log(products);
   return (
     <Wrapper>
       {business.map((restaurant) => {
