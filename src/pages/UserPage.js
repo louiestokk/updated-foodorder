@@ -98,18 +98,19 @@ const UserPage = () => {
                   </div>
                 )}
                 <div>
-                  <h4>Driver</h4>
-                  {driver.map((person) => {
-                    const { driverid, email, name, whatsup, number } = person;
-                    return (
-                      <div key={driverid} className="driver">
-                        <p style={{ fontWeight: "bold" }}>Name: {name}</p>
-                        <a href={`tel:${whatsup}`}>Whatsup: {whatsup}</a>
-                        <a href={`tel:${number}`}>Number: {whatsup}</a>
-                        <a href={`mailto:${email}`}>Email: {email}</a>
-                      </div>
-                    );
-                  })}
+                  <h4>Driver: {driver ? "" : <span>info coming sone</span>}</h4>
+                  {driver &&
+                    driver.map((person) => {
+                      const { driverid, email, name, whatsup, number } = person;
+                      return (
+                        <div key={driverid} className="driver">
+                          <p style={{ fontWeight: "bold" }}>Name: {name}</p>
+                          <a href={`tel:${whatsup}`}>Whatsup: {whatsup}</a>
+                          <a href={`tel:${number}`}>Number: {whatsup}</a>
+                          <a href={`mailto:${email}`}>Email: {email}</a>
+                        </div>
+                      );
+                    })}
                 </div>
               </div>
             );

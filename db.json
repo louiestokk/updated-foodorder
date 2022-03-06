@@ -11,18 +11,6 @@
       "bsofferdate": "30",
       "storeid": 1003,
       "id": 1
-    },
-    {
-      "bsname": "Mrhassan",
-      "phone": "+255 000 000",
-      "bsaddress": "test adress 1",
-      "bsopen": 11,
-      "bsclose": 23,
-      "bsdays": "All",
-      "bsoffer": "10%",
-      "bsofferdate": "30",
-      "storeid": 1003,
-      "id": 2
     }
   ],
   "new_items": [
@@ -36,121 +24,59 @@
   "reg_business": [],
   "001": [
     {
-      "orderid": 73016,
+      "orderid": 903135,
+      "id": 1
+    },
+    {
+      "orderid": 903135,
       "id": 2
-    },
-    {
-      "orderid": 126297,
-      "id": 3
-    },
-    {
-      "orderid": 73016,
-      "id": 4
     }
   ],
   "new_order": [
     {
       "contact": {
-        "name": "loiue",
+        "name": "Louie",
         "address": "Luukman restaurant",
         "area": "Stonw town",
         "hotel": "none",
         "phone": "2823728328",
-        "email": "louiestokk@gmail.com",
+        "email": "info@dodsboexperten.se",
         "explain": "call me when outside luukmman and im there in 1 min"
       },
-      "orderid": 144297,
+      "orderid": 903135,
       "picked": true,
       "delivered": true,
-      "canceled": false,
-      "driveremail": "test@gmail.com",
       "productsids": [
         "prod_7ZAMo1LEWxwNJ4",
-        "prod_mOVKl4GAKN5prR",
-        "prod_p6dP5gpBdYln7k",
         "prod_bO6J5a87vVoEjp",
-        "prod_A12JwrBzgvwPjn",
-        "prod_L1vOoZdOLWlRa8"
+        "prod_A12JwrBzgvwPjn"
       ],
       "order": {
         "item": [
           "Vegan Bowl",
-          "Pizza Margarita",
-          "Cheese dip",
-          "Fanta 50cl",
-          "Water 1.5l",
-          "Sausage and Fries"
+          "Fanta  50cl",
+          "Water 1.5l"
         ],
-        "quan": [1, 1, 1, 1, 1, 1]
+        "quan": [
+          1,
+          1,
+          1
+        ]
       },
-      "storeid": [1002, 1003, 1001],
+      "storeid": [
+        1003
+      ],
       "storeemails": [
-        "louiealsaffar@gmail.com",
-        "louiealsaffar@gmail.com",
         "louiestokk@gmail.com"
       ],
-      "storename": ["Fast Food Paje", "Pizza Delight", "Mr Bowl"],
+      "storename": [
+        "Mr Bowl"
+      ],
       "amount": {
-        "order": 26.5,
+        "order": 12.3,
         "delivery_fee": 2.5
       },
-      "id": 3,
-      "driver": [
-        {
-          "name": "Bassam",
-          "number": "+255000000",
-          "whatsup": "+255000000",
-          "driverid": "001",
-          "email": "test@gmail.com"
-        }
-      ]
-    },
-    {
-      "contact": {
-        "name": "loiue",
-        "address": "Luukman restaurant",
-        "area": "Stonw town",
-        "hotel": "none",
-        "phone": "2823728328",
-        "email": "louiestokk@gmail.com",
-        "explain": "call me when outside luukmman and im there in 1 min"
-      },
-      "orderid": 126297,
-      "picked": true,
-      "delivered": true,
-      "canceled": false,
-      "driveremail": "zanzifooddelivery@gmail.com",
-      "productsids": [
-        "prod_7ZAMo1LEWxwNJ4",
-        "prod_mOVKl4GAKN5prR",
-        "prod_p6dP5gpBdYln7k",
-        "prod_bO6J5a87vVoEjp",
-        "prod_A12JwrBzgvwPjn",
-        "prod_L1vOoZdOLWlRa8"
-      ],
-      "order": {
-        "item": [
-          "Vegan Bowl",
-          "Pizza Margarita",
-          "Cheese dip",
-          "Fanta 50cl",
-          "Water 1.5l",
-          "Sausage and Fries"
-        ],
-        "quan": [1, 1, 1, 1, 1, 1]
-      },
-      "storeid": [1002, 1003, 1001],
-      "storeemails": [
-        "louiealsaffar@gmail.com",
-        "louiealsaffar@gmail.com",
-        "louiestokk@gmail.com"
-      ],
-      "storename": ["Fast Food Paje", "Pizza Delight", "Mr Bowl"],
-      "amount": {
-        "order": 26.5,
-        "delivery_fee": 2.5
-      },
-      "id": 2,
+      "id": 1,
       "driver": [
         {
           "name": "Ahmadi",
@@ -159,44 +85,8 @@
           "driverid": "001",
           "email": "zanzifooddelivery@gmail.com"
         }
-      ]
-    },
-    {
-      "contact": {
-        "name": "Prov",
-        "address": "g",
-        "area": "g",
-        "hotel": "g",
-        "phone": "g",
-        "email": "louiealsaffar@gmail.com",
-        "explain": "g"
-      },
-      "orderid": 73016,
-      "picked": true,
-      "delivered": true,
-      "productsids": ["prod_NXELwjdM2r53A4"],
-      "order": {
-        "item": ["Half Chicken Meal"],
-        "quan": [1]
-      },
-      "storeid": [1001],
-      "storeemails": ["mzeemm1982@gmail.com"],
-      "storename": ["Fast Food Paje"],
-      "amount": {
-        "order": 9,
-        "delivery_fee": 2.5
-      },
-      "id": 4,
-      "driveremail": "zanzifooddelivery@gmail.com",
-      "driver": [
-        {
-          "name": "Ahmadi",
-          "number": "+255000000",
-          "whatsup": "+255000000",
-          "driverid": "001",
-          "email": "zanzifooddelivery@gmail.com"
-        }
-      ]
+      ],
+      "driveremail": "zanzifooddelivery@gmail.com"
     }
   ]
 }

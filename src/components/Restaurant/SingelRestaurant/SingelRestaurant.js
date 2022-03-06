@@ -16,16 +16,6 @@ const SingelRestaurant = () => {
     <Wrapper>
       <Navbar />
       <div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-evenly",
-            height: "4.2rem",
-          }}
-        >
-          <div>delivering to</div>
-          <div>When</div>
-        </div>
         {restaurants
           .filter((el) => el.id === +id)
           .map((rest) => {
@@ -46,6 +36,7 @@ const SingelRestaurant = () => {
 
             return (
               <div key={id} className="container">
+                <section className="filler"></section>
                 <img src={mainImage} className="mainImage" />
                 <div
                   style={{ display: "flex", justifyContent: "space-between" }}
@@ -201,5 +192,9 @@ const Wrapper = styled.section`
     top: 50%;
     left: 30%;
     color: #f44336;
+  }
+  .filler {
+    background: #f44336;
+    height: 2rem;
   }
 `;

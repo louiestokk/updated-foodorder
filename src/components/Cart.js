@@ -132,16 +132,13 @@ const Cart = () => {
             return (
               <div key={el.id} className="cart-item">
                 <h4>{el.name}</h4>
-                <div style={{ display: "flex" }}>
-                  <p className="price">${el.price.raw}</p>
-                  <button
-                    type="button"
-                    className="add-btn"
-                    onClick={() => handleAddToCart(el.id, 1)}
-                  >
-                    add 👍
-                  </button>
-                </div>
+                <button
+                  type="button"
+                  className="add-btn"
+                  onClick={() => handleAddToCart(el.id, 1)}
+                >
+                  ${el.price.raw} add 👍
+                </button>
               </div>
             );
           })}
@@ -203,8 +200,9 @@ const Wrapper = styled.section`
     justify-content: space-evenly;
   }
   .cart-item {
-    margin-top: 1rem;
+    margin-top: 0.3rem;
     margin-left: 0.5rem;
+    display: flex;
   }
   .cart-btn {
     display: flex;
@@ -225,10 +223,11 @@ const Wrapper = styled.section`
     border-radius: 4px 4px;
   }
   .add-btn {
-    width: 3rem;
+    width: 5.2rem;
     background: #f44336;
     color: white;
     border-radius: 4px 4px;
+    font-size: 0.8rem;
   }
   .price {
     font-size: 0.8rem;

@@ -105,9 +105,9 @@ const AdressForm = ({
         <button
           type="submit"
           onClick={(e) => {
-            // sendEmail(e);
+            sendEmail(e);
             setActiveStep(1);
-            // sendOrderData();
+            sendOrderData();
             setOrder(Array.from(e.target.parentElement.elements));
           }}
         >

@@ -63,7 +63,7 @@ const CheckoutForm = ({ calculateDeliveryFee, sendOrderData }) => {
   const handleStripeSubmit = async (ev) => {
     ev.preventDefault();
     setProccessing(true);
-    refreshCart();
+
     const payload = await stripe.confirmCardPayment(clientSecret, {
       payment_method: {
         card: elements.getElement(CardElement),
@@ -77,6 +77,7 @@ const CheckoutForm = ({ calculateDeliveryFee, sendOrderData }) => {
       setProccessing(true);
       setSucceeded(true);
       sendOrderData();
+      refreshCart();
       setTimeout(() => {
         navigate("/confirmation");
       }, 7000);
