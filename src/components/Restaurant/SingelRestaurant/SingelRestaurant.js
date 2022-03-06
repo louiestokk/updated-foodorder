@@ -11,7 +11,7 @@ import Footer from "../../Footer";
 const SingelRestaurant = () => {
   const { products, handleAddToCart, added, setAdded } = useProductsContext();
   const { id } = useParams();
-  console.log(products.map((el) => el.id));
+
   return (
     <Wrapper>
       <Navbar />
