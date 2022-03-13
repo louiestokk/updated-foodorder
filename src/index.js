@@ -7,7 +7,8 @@ import { Auth0Provider } from "@auth0/auth0-react";
 import { UserProvider } from "./context/user_context";
 import { ProductsProvider } from "./context/products_context";
 import { GeoCoordsProvider } from "./context/geo_coords_context";
-
+import { Provider } from "react-redux";
+import store from "./redux/store";
 ReactDOM.render(
   <Auth0Provider
     domain={process.env.REACT_APP_AUTH_DOMAIN}
@@ -15,13 +16,15 @@ ReactDOM.render(
     redirectUri={window.location.origin}
     cacheLocation="localstorage"
   >
-    <GeoCoordsProvider>
-      <UserProvider>
-        <ProductsProvider>
-          <App />
-        </ProductsProvider>
-      </UserProvider>
-    </GeoCoordsProvider>
+    <Provider store={store}>
+      <GeoCoordsProvider>
+        <UserProvider>
+          <ProductsProvider>
+            <App />
+          </ProductsProvider>
+        </UserProvider>
+      </GeoCoordsProvider>
+    </Provider>
   </Auth0Provider>,
   document.getElementById("root")
 );

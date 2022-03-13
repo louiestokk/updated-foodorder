@@ -2,21 +2,21 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useProductsContext } from "../../../context/products_context";
-import { restaurants } from "../../../utils/data";
 import { BsFillInfoCircleFill } from "react-icons/bs";
 import { BsFillStarFill } from "react-icons/bs";
 import { MdRestaurantMenu } from "react-icons/md";
 import Navbar from "../../Navbar";
 import Footer from "../../Footer";
+import { useSelector } from "react-redux";
 const SingelRestaurant = () => {
-  const { products, handleAddToCart, added, setAdded } = useProductsContext();
+  const { handleAddToCart, added, setAdded } = useProductsContext();
   const { id } = useParams();
-
+  const { allProducts } = useSelector((state) => state);
   return (
     <Wrapper>
       <Navbar />
       <div>
-        {restaurants
+        {allProducts.shops
           .filter((el) => el.id === +id)
           .map((rest) => {
             const {
@@ -96,7 +96,7 @@ const SingelRestaurant = () => {
                   ) : (
                     ""
                   )}
-                  {products
+                  {allProducts.products
                     .filter((el) => menu.includes(el.id))
                     .map((el) => {
                       return (

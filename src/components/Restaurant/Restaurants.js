@@ -1,16 +1,31 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useProductsContext } from "../../context/products_context";
-import { Oval } from "react-loader-spinner";
-
+import { commerce } from "../../lib/commerce";
+import { useSelector, useDispatch } from "react-redux";
+import { setProducts } from "../../redux/actions/ProductActions";
 const Restaurants = () => {
-  const { business, products } = useProductsContext();
+  const { business } = useProductsContext();
   const navigate = useNavigate();
-  console.log(products);
+  const dispatch = useDispatch();
+  const { allProducts } = useSelector((state) => state);
+  const fetchProducts = async (query) => {
+    try {
+      const { data } = await commerce.products.list({
+        category_slug: [query],
+      });
+      dispatch(setProducts(data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    fetchProducts("All");
+  }, []);
   return (
     <Wrapper>
-      {business.map((restaurant) => {
+      {allProducts.shops.map((restaurant) => {
         const { id, name, image, type, deliverfee, icon } = restaurant;
         return (
           <div
