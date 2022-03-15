@@ -21,20 +21,7 @@ const SingelRestaurant = () => {
         {business
           .filter((el) => el.id === +id)
           .map((rest) => {
-            const {
-              id,
-              name,
-              menu,
-              location,
-              query,
-              number,
-              image,
-              type,
-              deliverfee,
-              category,
-              icon,
-              mainImage,
-            } = rest;
+            const { id, name, menu, category, icon, mainImage } = rest;
 
             return (
               <div key={id} className="container">

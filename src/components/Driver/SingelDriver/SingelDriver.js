@@ -252,10 +252,29 @@ const SingelDriver = ({ orders, delivered, setDelivered }) => {
                   <option value="bicyle">Bicyle</option>
                   <option value="car">car</option>
                 </select>
-                <button type="submit" onClick={applyAsDriver}>
+                <button
+                  type="submit"
+                  onClick={applyAsDriver}
+                  style={{
+                    width: "8rem",
+                    border: "1px solid white",
+                    height: "1.6rem",
+                  }}
+                >
                   APPLY NOW
                 </button>
               </form>
+
+              <Link
+                to="/"
+                style={{
+                  textDecoration: "none",
+                  color: "white",
+                  textAlign: "center",
+                }}
+              >
+                <p> Back Home</p>
+              </Link>
             </div>
           )}
         </div>
