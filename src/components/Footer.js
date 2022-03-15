@@ -5,7 +5,10 @@ import { BsFillArrowRightCircleFill } from "react-icons/bs";
 import { BsFillArrowLeftCircleFill } from "react-icons/bs";
 import { useLocation } from "react-router-dom";
 import { MdMoped } from "react-icons/md";
+import { useUserContext } from "../context/user_context";
 const Footer = () => {
+  const { user } = useUserContext();
+
   const location = useLocation();
   return (
     <Wrapper>
@@ -16,16 +19,19 @@ const Footer = () => {
             Connect your business
             <BsFillArrowLeftCircleFill className="bsicon" />
           </Link>
-          <Link
-            to="/delivery"
-            className="link"
-            style={{
-              marginBottom: "1rem",
-            }}
-          >
-            <h4>Drivers</h4>
-            <MdMoped className="bsicon" />
-          </Link>
+
+          {user && (
+            <Link
+              to="/delivery"
+              className="link"
+              style={{
+                marginBottom: "1rem",
+              }}
+            >
+              <h4>Drivers</h4>
+              <MdMoped className="bsicon" />
+            </Link>
+          )}
         </div>
       )}
       <div
@@ -66,7 +72,7 @@ const Wrapper = styled.footer`
     align-items: center;
     display: flex;
     justify-content: center;
-    margin-top: 1rem;
+    margin-bottom: 1rem;
   }
   .link span {
     font-size: 0.9rem;
