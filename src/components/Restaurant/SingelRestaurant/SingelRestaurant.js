@@ -8,15 +8,17 @@ import { MdRestaurantMenu } from "react-icons/md";
 import Navbar from "../../Navbar";
 import Footer from "../../Footer";
 import { useSelector } from "react-redux";
+import { getAllProducts } from "../../../redux-toolkit/products/productSlice";
+
 const SingelRestaurant = () => {
-  const { handleAddToCart, added, setAdded } = useProductsContext();
+  const products = useSelector(getAllProducts);
+  const { handleAddToCart, added, setAdded, business } = useProductsContext();
   const { id } = useParams();
-  const { allProducts } = useSelector((state) => state);
   return (
     <Wrapper>
       <Navbar />
       <div>
-        {allProducts.shops
+        {business
           .filter((el) => el.id === +id)
           .map((rest) => {
             const {
@@ -96,7 +98,7 @@ const SingelRestaurant = () => {
                   ) : (
                     ""
                   )}
-                  {allProducts.products
+                  {products
                     .filter((el) => menu.includes(el.id))
                     .map((el) => {
                       return (

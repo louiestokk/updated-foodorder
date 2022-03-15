@@ -8,7 +8,7 @@ import { UserProvider } from "./context/user_context";
 import { ProductsProvider } from "./context/products_context";
 import { GeoCoordsProvider } from "./context/geo_coords_context";
 import { Provider } from "react-redux";
-import store from "./redux/store";
+import store from "./redux-toolkit/store";
 ReactDOM.render(
   <Auth0Provider
     domain={process.env.REACT_APP_AUTH_DOMAIN}
