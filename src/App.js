@@ -20,6 +20,7 @@ function App() {
   const { user } = useUserContext();
   const [orders, setOrders] = useState([]);
   const [delivered, setDelivered] = useState(false);
+
   const fetchOrder = async () => {
     try {
       const { data } = await axios("http://localhost:3000/new_order");

@@ -37,7 +37,7 @@ const SingelDriver = ({ orders, delivered, setDelivered }) => {
         }
       );
   };
-
+  console.log(activeorders);
   const fetchMyActiveOrders = async () => {
     try {
       const { data } = await axios(
@@ -91,7 +91,7 @@ const SingelDriver = ({ orders, delivered, setDelivered }) => {
   useEffect(() => {
     fetchCompletedOrders();
   }, []);
-
+  console.log(driver);
   return (
     <>
       {sent && (

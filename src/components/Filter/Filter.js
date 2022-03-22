@@ -7,9 +7,8 @@ const Filter = () => {
   const { setBusiness } = useProductsContext();
 
   const filterCategory = (e) => {
-    console.log(e.target.textContent);
     const newBusiness = restaurants.filter((el) =>
-      el.category.includes(e.target.textContent)
+      el.category.includes(e.target.innerText)
     );
     setBusiness(newBusiness);
   };
@@ -27,10 +26,10 @@ const Filter = () => {
               <button
                 type="button"
                 key={ind}
-                className="cat-btn"
+                className="cat-bt"
                 onClick={filterCategory}
               >
-                {el}
+                <p> {el}</p>
               </button>
             );
           })}
@@ -52,6 +51,7 @@ const Filter = () => {
 
 export default Filter;
 const Wrapper = styled.div`
+  width: 100%;
   .area {
     display: flex;
     margin-left: 1rem;
@@ -59,8 +59,6 @@ const Wrapper = styled.div`
   }
   .categories {
     display: flex;
-    justify-content: center;
-    aling-items: center;
     overflow-x: scroll;
     width: 100%;
   }
@@ -74,16 +72,22 @@ const Wrapper = styled.div`
   }
   .cat-btn {
     background: white;
-    border-radius: 5px 5px;
-    margin-right: 0.2rem;
+    margin-right: 0.3rem;
     color: #f44336;
     letter-spacing: 1px;
-    width: 6rem;
-    padding: 0.3rem;
     font-size: 0.9rem;
+    text-align: center;
   }
   .loc-btn {
     border: none;
     background: transparent;
+  }
+  .cat-bt {
+    background: white;
+    border: none;
+    color: #f44336;
+  }
+  p {
+    width: 6rem;
   }
 `;

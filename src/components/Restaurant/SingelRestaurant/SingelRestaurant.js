@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useProductsContext } from "../../../context/products_context";
@@ -9,9 +9,11 @@ import Navbar from "../../Navbar";
 import Footer from "../../Footer";
 import { useSelector } from "react-redux";
 import { getAllProducts } from "../../../redux-toolkit/products/productSlice";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const SingelRestaurant = () => {
   const products = useSelector(getAllProducts);
+  const [deliveryOption, setdeliverOption] = useState("");
   const { handleAddToCart, added, setAdded, business } = useProductsContext();
   const { id } = useParams();
   return (
@@ -25,6 +27,20 @@ const SingelRestaurant = () => {
 
             return (
               <div key={id} className="container">
+                <div
+                  className="deliver-address"
+                  style={{ display: "flex", alignItems: "center" }}
+                >
+                  <h4>Deliver to:</h4>
+                  <div
+                    className="users-address"
+                    style={{ margin: "0 0.5rem", fontSize: "0.8rem" }}
+                  >
+                    <p>name of place here</p>
+                    <p>Adress & zip here </p>
+                  </div>
+                </div>
+
                 <section className="filler"></section>
                 <img src={mainImage} className="mainImage" />
                 <div
@@ -81,7 +97,15 @@ const SingelRestaurant = () => {
                 </h4>
                 <div className="menu">
                   {added ? (
-                    <h4 className="added-text">Item added to your food bag</h4>
+                    <ToastContainer
+                      position="bottom-left"
+                      autoClose={2000}
+                      hideProgressBar={false}
+                      newestOnTop={false}
+                      closeOnClick
+                      pauseOnHover
+                      style={{ marginBottom: "1rem" }}
+                    />
                   ) : (
                     ""
                   )}
@@ -94,9 +118,7 @@ const SingelRestaurant = () => {
                           className="menu-items"
                           onClick={() => {
                             handleAddToCart(el.id, 1);
-                            setTimeout(() => {
-                              setAdded(false);
-                            }, 6000);
+                            toast("Item added to your foodbag");
                           }}
                         >
                           <div className="item-info">
