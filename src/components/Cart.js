@@ -5,6 +5,8 @@ import Checkout from "../pages/Checkout";
 import axios from "axios";
 import { useUserContext } from "../context/user_context";
 import { restaurants } from "../utils/data";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const Cart = () => {
   const orderId = Math.floor(Math.random() * 1000000);
   const { cart, products, sides, handleUpdateCartQty, handleAddToCart } =
@@ -95,6 +97,15 @@ const Cart = () => {
   return (
     <Wrapper>
       <div className="cart">
+        <ToastContainer
+          position="top-left"
+          autoClose={2000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          pauseOnHover
+          style={{ marginBottom: "1rem" }}
+        />
         <div className="sec sec-1">
           <h2 style={{ marginLeft: "0.5rem" }}>Your Food Bag</h2>
           {cart.line_items &&
@@ -135,7 +146,10 @@ const Cart = () => {
                 <button
                   type="button"
                   className="add-btn"
-                  onClick={() => handleAddToCart(el.id, 1)}
+                  onClick={() => {
+                    handleAddToCart(el.id, 1);
+                    toast("Item added to food bag");
+                  }}
                 >
                   ${el.price.raw} add 👍
                 </button>
