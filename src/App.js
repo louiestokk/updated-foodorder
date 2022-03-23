@@ -15,12 +15,13 @@ import {
   UserPage,
   Confirmation,
 } from "./pages";
+import GoogleMapReact from "google-map-react";
 function App() {
   const [orderPickedUp, setorderPickedUp] = useState(true);
   const { user } = useUserContext();
   const [orders, setOrders] = useState([]);
   const [delivered, setDelivered] = useState(false);
-
+  const [coords, setCoords] = useState({});
   const fetchOrder = async () => {
     try {
       const { data } = await axios("http://localhost:3000/new_order");
@@ -29,10 +30,17 @@ function App() {
       console.log(error);
     }
   };
-
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(
+      ({ coords: { latitude, longitude } }) => {
+        setCoords({ lat: latitude, lng: longitude });
+      }
+    );
+  }, []);
   useEffect(() => {
     fetchOrder();
   }, []);
+
   return (
     <Router>
       <Routes>
@@ -42,7 +50,11 @@ function App() {
         <Route path="*" element={<ErrorPage />} />
         <Route path="/connectbusiness" exact element={<Connect />} />
         <Route path="/cart" exact element={<Cart />} />
-        <Route path={`/restaurant/:id`} exact element={<SingelRestaurant />} />
+        <Route
+          path={`/restaurant/:id`}
+          exact
+          element={<SingelRestaurant coords={coords} />}
+        />
         <Route
           path={`/mydashboard/:nickname`}
           exact

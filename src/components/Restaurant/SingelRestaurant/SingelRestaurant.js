@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useProductsContext } from "../../../context/products_context";
@@ -11,11 +11,30 @@ import { useSelector } from "react-redux";
 import { getAllProducts } from "../../../redux-toolkit/products/productSlice";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-const SingelRestaurant = () => {
+import axios from "axios";
+import GoogleMapReact from "google-map-react";
+import { HiLocationMarker } from "react-icons/hi";
+import mapStyles from "../../../utils/mapStyles";
+const SingelRestaurant = ({ coords }) => {
   const products = useSelector(getAllProducts);
-  const [deliveryOption, setdeliverOption] = useState("");
   const { handleAddToCart, added, setAdded, business } = useProductsContext();
   const { id } = useParams();
+  const [userLocation, setUserLocation] = useState("");
+
+  const reverseGeoCode = async () => {
+    try {
+      const { data } = await axios(
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${coords.lat},${coords.lng}&key=${process.env.REACT_APP_GOOGLEMAPS_API_KEY}`
+      );
+      setUserLocation(data.results[0].formatted_address);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    reverseGeoCode();
+  });
+  console.log(coords);
   return (
     <Wrapper>
       <Navbar />
@@ -31,13 +50,39 @@ const SingelRestaurant = () => {
                   className="deliver-address"
                   style={{ display: "flex", alignItems: "center" }}
                 >
-                  <h4>Deliver to:</h4>
                   <div
                     className="users-address"
                     style={{ margin: "0 0.5rem", fontSize: "0.8rem" }}
                   >
-                    <p>name of place here</p>
-                    <p>Adress & zip here </p>
+                    <h4>Deliver to:</h4>
+                    <p>{userLocation}</p>
+                  </div>
+                  <div
+                    className="map-container"
+                    style={{ height: "240px", width: "100%" }}
+                  >
+                    <GoogleMapReact
+                      bootstrapURLKeys={{
+                        key: process.env.REACT_APP_GOOGLEMAPS_API_KEY,
+                      }}
+                      defaultCenter={coords}
+                      center={coords}
+                      defaultZoom={12}
+                      margin={[50, 50, 50, 50]}
+                      options={{
+                        disableDefaultUI: true,
+                        zoomControl: true,
+                        styles: mapStyles,
+                      }}
+                    >
+                      <div
+                        className="user-position"
+                        lat={Number(coords.lat)}
+                        lng={Number(coords.lng)}
+                      >
+                        <HiLocationMarker />
+                      </div>
+                    </GoogleMapReact>
                   </div>
                 </div>
 
@@ -152,9 +197,7 @@ const Wrapper = styled.section`
     height: 175px;
     object-fit: cover;
   }
-  .container div {
-    margin-top: 1rem;
-  }
+
   .popular {
     width: 100%;
     box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
@@ -207,5 +250,9 @@ const Wrapper = styled.section`
   .filler {
     background: #f44336;
     height: 2rem;
+  }
+  .map-container {
+    margin: 1rem 0;
+    height: 100%;
   }
 `;
