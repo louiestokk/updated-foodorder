@@ -80,7 +80,9 @@ const SingelRestaurant = ({ coords }) => {
                         lat={Number(coords.lat)}
                         lng={Number(coords.lng)}
                       >
-                        <HiLocationMarker />
+                        <HiLocationMarker
+                          style={{ fontSize: "0.8rem", color: "#f44336" }}
+                        />
                       </div>
                     </GoogleMapReact>
                   </div>
