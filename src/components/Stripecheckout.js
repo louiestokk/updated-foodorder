@@ -13,7 +13,12 @@ import { useProductsContext } from "../context/products_context";
 import { useUserContext } from "../context/user_context";
 const promise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
-const CheckoutForm = ({ calculateDeliveryFee, sendOrderData }) => {
+const CheckoutForm = ({
+  calculateDeliveryFee,
+  sendOrderData,
+  contact,
+  setContact,
+}) => {
   const { cart, refreshCart } = useProductsContext();
   const { user } = useUserContext();
   const navigate = useNavigate();
@@ -110,8 +115,28 @@ const CheckoutForm = ({ calculateDeliveryFee, sendOrderData }) => {
             marginTop: "2rem",
           }}
         >
-          <h5>Hello {user && user.nickname}</h5>
-          Total: ${cart.subtotal.raw + calculateDeliveryFee()}
+          <h5>
+            Hello {user && user.nickname} Your Total: $
+            {cart.subtotal.raw + calculateDeliveryFee()}
+          </h5>
+
+          <input
+            type="text"
+            value={contact.phone}
+            placeholder="your number"
+            required
+            className="user-info"
+            onChange={(e) => setContact({ ...contact, phone: e.target.value })}
+          />
+          <input
+            type="text"
+            value={contact.explain}
+            placeholder="describe more where you are(Optional) "
+            className="user-info"
+            onChange={(e) =>
+              setContact({ ...contact, explain: e.target.value })
+            }
+          />
         </article>
       )}
 
@@ -149,6 +174,8 @@ const Stripecheckout = ({
   sendOrderData,
   calculateDeliveryFee,
   setActiveStep,
+  contact,
+  setContact,
 }) => {
   return (
     <Wrapper>
@@ -157,6 +184,8 @@ const Stripecheckout = ({
           sendOrderData={sendOrderData}
           calculateDeliveryFee={calculateDeliveryFee}
           setActiveStep={setActiveStep}
+          contact={contact}
+          setContact={setContact}
         />
       </Elements>
     </Wrapper>
@@ -176,6 +205,10 @@ const Wrapper = styled.section`
       0px 1px 1.5px 0px rgba(0, 0, 0, 0.07);
     border-radius: 7px;
     padding: 40px;
+  }
+  .user-info {
+    width: 80%;
+    font-size: 0.8rem;
   }
   input {
     border-radius: 6px;

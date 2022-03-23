@@ -15,7 +15,15 @@ const Checkout = ({
 
   return (
     <div>
-      <Paper>
+      <Stripecheckout
+        setActiveStep={setActiveStep}
+        calculateDeliveryFee={calculateDeliveryFee}
+        sendOrderData={sendOrderData}
+        orderId={orderId}
+        contact={contact}
+        setContact={setContact}
+      />
+      {/* <Paper>
         <Stepper activeStep={activeStep}>
           {steps.map((step) => {
             return (
@@ -41,7 +49,7 @@ const Checkout = ({
           calculateDeliveryFee={calculateDeliveryFee}
           sendOrderData={sendOrderData}
         />
-      )}
+      )} */}
     </div>
   );
 };

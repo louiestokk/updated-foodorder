@@ -54,7 +54,7 @@ const Cart = () => {
     area: "",
     phone: "",
     hotel: "none",
-    explain: "none",
+    explain: "",
   });
 
   const sendOrderData = async () => {

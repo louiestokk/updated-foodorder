@@ -34,7 +34,7 @@ const SingelRestaurant = ({ coords }) => {
   useEffect(() => {
     reverseGeoCode();
   });
-  console.log(coords);
+
   return (
     <Wrapper>
       <Navbar />

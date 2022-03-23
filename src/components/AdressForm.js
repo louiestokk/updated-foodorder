@@ -108,7 +108,7 @@ const AdressForm = ({
             sendEmail(e);
             setActiveStep(1);
             sendOrderData();
-            setOrder(Array.from(e.target.parentElement.elements));
+            setOrder(Array.from(e.currentTarget.parentElement.elements));
           }}
         >
           Next <MdKeyboardArrowRight className="icon" />
