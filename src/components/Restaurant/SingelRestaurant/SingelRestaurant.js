@@ -254,7 +254,7 @@ const Wrapper = styled.section`
     height: 2rem;
   }
   .map-container {
-    margin: 1rem 0;
+    margin: 0.5rem 0;
     height: 100%;
   }
 `;
