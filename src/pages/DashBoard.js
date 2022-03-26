@@ -523,7 +523,7 @@ const DashBoard = ({ orderPickedUp, setOrderPickedUp }) => {
                             }}
                           >
                             <h5 style={{ marginRight: "0.2rem" }}> Driver:</h5>
-                            {driver.map((el, ind) => {
+                            {driver?.map((el, ind) => {
                               return (
                                 <span
                                   key={ind}

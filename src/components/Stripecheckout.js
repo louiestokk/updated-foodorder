@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { loadStripe } from "@stripe/stripe-js";
 import { useNavigate } from "react-router-dom";
+
 import styled from "styled-components";
 import {
   CardElement,
@@ -11,16 +12,12 @@ import {
 } from "@stripe/react-stripe-js";
 import { useProductsContext } from "../context/products_context";
 import { useUserContext } from "../context/user_context";
+
 const promise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
-const CheckoutForm = ({
-  calculateDeliveryFee,
-  sendOrderData,
-  contact,
-  setContact,
-}) => {
-  const { cart, refreshCart } = useProductsContext();
-  const { user } = useUserContext();
+const CheckoutForm = ({ calculateDeliveryFee }) => {
+  const { cart, refreshCart, products } = useProductsContext();
+  const { user, contact, setContact } = useUserContext();
   const navigate = useNavigate();
   // stripe things
   const [succeeded, setSucceeded] = useState(false);
@@ -81,8 +78,6 @@ const CheckoutForm = ({
       setError(null);
       setProccessing(true);
       setSucceeded(true);
-      sendOrderData();
-      refreshCart();
       setTimeout(() => {
         navigate("/confirmation");
       }, 7000);
@@ -92,6 +87,7 @@ const CheckoutForm = ({
     setDisabled(event.empty);
     setError(event.error ? event.error.message : "");
   };
+
   return (
     <div>
       {succeeded ? (
@@ -120,6 +116,14 @@ const CheckoutForm = ({
             {cart.subtotal.raw + calculateDeliveryFee()}
           </h5>
 
+          <input
+            type="text"
+            value={contact.name}
+            placeholder="your name"
+            required
+            className="user-info"
+            onChange={(e) => setContact({ ...contact, name: e.target.value })}
+          />
           <input
             type="text"
             value={contact.phone}

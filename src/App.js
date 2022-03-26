@@ -15,7 +15,7 @@ import {
   UserPage,
   Confirmation,
 } from "./pages";
-import GoogleMapReact from "google-map-react";
+
 function App() {
   const [orderPickedUp, setorderPickedUp] = useState(true);
   const { user } = useUserContext();

@@ -7,7 +7,7 @@ import { BsFillStarFill } from "react-icons/bs";
 import { MdRestaurantMenu } from "react-icons/md";
 import Navbar from "../../Navbar";
 import Footer from "../../Footer";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getAllProducts } from "../../../redux-toolkit/products/productSlice";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -15,18 +15,24 @@ import axios from "axios";
 import GoogleMapReact from "google-map-react";
 import { HiLocationMarker } from "react-icons/hi";
 import mapStyles from "../../../utils/mapStyles";
+import {
+  addAddress,
+  getAddress,
+} from "../../../redux-toolkit/order/orderSlice";
 const SingelRestaurant = ({ coords }) => {
   const products = useSelector(getAllProducts);
   const { handleAddToCart, added, setAdded, business } = useProductsContext();
   const { id } = useParams();
-  const [userLocation, setUserLocation] = useState("");
+  const userLocation = useSelector(getAddress);
 
+  const dispatch = useDispatch();
   const reverseGeoCode = async () => {
     try {
       const { data } = await axios(
         `https://maps.googleapis.com/maps/api/geocode/json?latlng=${coords.lat},${coords.lng}&key=${process.env.REACT_APP_GOOGLEMAPS_API_KEY}`
       );
-      setUserLocation(data.results[0].formatted_address);
+
+      dispatch(addAddress(data.results[0].formatted_address));
     } catch (error) {
       console.log(error);
     }

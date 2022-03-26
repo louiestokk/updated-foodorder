@@ -8,13 +8,14 @@ import { restaurants } from "../utils/data";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const Cart = () => {
-  const orderId = Math.floor(Math.random() * 1000000);
   const { cart, products, sides, handleUpdateCartQty, handleAddToCart } =
     useProductsContext();
-  const { loginWithRedirect, user, isAuthenticated } = useUserContext();
+  const { loginWithRedirect, user, isAuthenticated, contact, setContact } =
+    useUserContext();
   const [showCheckout, setShowCheckout] = useState(false);
 
   //  get storeid and storename of cart items so when send order its marked in server with witch restaurant,id and email
+  const orderId = Math.floor(Math.random() * 1000000);
   const test = products.filter((el) =>
     cart.line_items.map((el) => el.product_id).includes(el.id)
   );
@@ -47,51 +48,6 @@ const Cart = () => {
       return deliveryfee;
     }
     return deliveryfee;
-  };
-  const [contact, setContact] = useState({
-    name: "",
-    address: "",
-    area: "",
-    phone: "",
-    hotel: "none",
-    explain: "",
-  });
-
-  const sendOrderData = async () => {
-    try {
-      const resp = await axios.post("http://localhost:3000/new_order", {
-        contact: {
-          name: contact.name,
-          address: contact.address,
-          area: contact.area,
-          hotel: contact.hotel,
-          phone: contact.phone,
-          email: user.email,
-          explain: contact.explain,
-        },
-        orderid: orderId,
-        picked: false,
-        delivered: false,
-        productsids: cart.line_items.map((el) => el.product_id),
-        order: {
-          item: cart.line_items.map((el) => el.name),
-          quan: cart.line_items.map((el) => el.quantity),
-        },
-        storeid: test3,
-        storeemails: restaurants
-          .filter((el) => test3.includes(el.id))
-          .map((el) => el.email),
-        storename: restaurants
-          .filter((el) => test3.includes(el.id))
-          .map((rest) => rest.name),
-        amount: {
-          order: cart.subtotal.raw,
-          delivery_fee: 2.5,
-        },
-      });
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   return (
@@ -190,7 +146,6 @@ const Cart = () => {
       </div>
       {showCheckout && (
         <Checkout
-          sendOrderData={sendOrderData}
           setContact={setContact}
           contact={contact}
           orderId={orderId}

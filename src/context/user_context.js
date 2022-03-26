@@ -7,7 +7,14 @@ const UserContext = React.createContext();
 const UserProvider = ({ children }) => {
   const { loginWithRedirect, logout, user, isAuthenticated } = useAuth0();
   const [usersBusiness, setUsersBusiness] = useState([]);
-
+  const [contact, setContact] = useState({
+    name: "",
+    address: "",
+    area: "",
+    phone: "",
+    hotel: "",
+    explain: "",
+  });
   return (
     <UserContext.Provider
       value={{
@@ -17,6 +24,8 @@ const UserProvider = ({ children }) => {
         isAuthenticated,
         usersBusiness,
         setUsersBusiness,
+        contact,
+        setContact,
       }}
     >
       {children}
