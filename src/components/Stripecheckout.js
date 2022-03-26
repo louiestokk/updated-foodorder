@@ -80,7 +80,7 @@ const CheckoutForm = ({ calculateDeliveryFee }) => {
       setSucceeded(true);
       setTimeout(() => {
         navigate("/confirmation");
-      }, 7000);
+      }, 3000);
     }
   };
   const handleStripeChange = async (event) => {
