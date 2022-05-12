@@ -128,3 +128,23 @@ export const restaurants = [
     email: "",
   },
 ];
+export const newRoute = [
+  {
+    name: "Tumba gymanisum kök",
+    address: "Utbildningsvägen 2",
+    city: "Tumba",
+    routeId: "h3h3h3h3h3h",
+    customerId: "2b2b2b-2b2b2b2",
+    customerOrderNumber: "3333, 3333, 3333",
+    coords: { lat: 59.2043036, lng: 17.8301711 },
+  },
+  {
+    name: "Tunaskolan hemkunskap",
+    address: "Prästgårdsvägen 114",
+    city: "Tumba",
+    routeId: "h4h4h4h4h4h",
+    customerId: "3b3b3b3b-3b3bb33b",
+    customerOrderNumber: "2222, 2222, 2222",
+    coords: { lat: 59.20197659999999, lng: 17.8375996 },
+  },
+];

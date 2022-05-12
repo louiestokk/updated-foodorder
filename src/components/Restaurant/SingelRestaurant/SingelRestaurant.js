@@ -19,6 +19,8 @@ import {
   addAddress,
   getAddress,
 } from "../../../redux-toolkit/order/orderSlice";
+// test
+import Geocode from "react-geocode";
 const SingelRestaurant = ({ coords }) => {
   const products = useSelector(getAllProducts);
   const { handleAddToCart, added, setAdded, business } = useProductsContext();
@@ -40,7 +42,25 @@ const SingelRestaurant = ({ coords }) => {
   useEffect(() => {
     reverseGeoCode();
   });
+  console.log(coords);
+  // test
+  Geocode.setApiKey(process.env.REACT_APP_GOOGLEMAPS_API_KEY);
+  Geocode.setRegion("se");
 
+  const getLatLng = (adress) => {
+    Geocode.fromAddress("hisingsgatan 10").then(
+      (response) => {
+        const { lat, lng } = response.results[0].geometry.location;
+        console.log(lat, lng);
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  };
+  useEffect(() => {
+    getLatLng();
+  }, []);
   return (
     <Wrapper>
       <Navbar />

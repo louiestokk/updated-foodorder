@@ -6,6 +6,7 @@ import Cart from "./components/Cart";
 import { useUserContext } from "./context/user_context";
 import Driver from "./components/Driver/Driver";
 import SingelDriver from "./components/Driver/SingelDriver/SingelDriver";
+import PrePlan from "./components/PrePlan";
 import {
   ErrorPage,
   DashBoard,
@@ -44,6 +45,7 @@ function App() {
   return (
     <Router>
       <Routes>
+        <Route path="preplan" element={<PrePlan />} />
         <Route path="/" exact element={<Home />} />
         <Route path="/delivery" exact element={<Driver />} />
         <Route path="/confirmation" exact element={<Confirmation />} />
