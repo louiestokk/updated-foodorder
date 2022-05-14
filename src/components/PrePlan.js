@@ -18,9 +18,15 @@ import {
   TextField,
   Button,
   Typography,
+  IconButton,
+  ButtonGroup,
 } from "@material-ui/core";
 
-import { BarChart, AccountCircle } from "@material-ui/icons";
+import {
+  BarChart,
+  AccountCircle,
+  CancelPresentation,
+} from "@material-ui/icons";
 import {
   useJsApiLoader,
   GoogleMap,
@@ -58,7 +64,7 @@ const useStyles = makeStyles({
     top: "2%",
     left: "1%",
     width: "300px",
-    height: "140px",
+    height: "180px",
     alignItems: "center",
     display: "flex",
   },
@@ -70,7 +76,7 @@ const useStyles = makeStyles({
     alignItems: "center",
   },
   routbtn: {
-    width: "12rem",
+    width: "10rem",
     height: "2rem",
   },
   input: {
@@ -78,11 +84,20 @@ const useStyles = makeStyles({
   },
   maprout: {
     position: "absolute",
-    top: "40%",
+    top: "50%",
     left: "1%",
     width: "300px",
     display: "flex",
     justifyContent: "space-evenly",
+  },
+  buttons: {
+    display: "flex",
+    flexDirection: "column",
+  },
+  clearbtn: {
+    width: "10rem",
+    height: "2rem",
+    marginTop: "0.3rem",
   },
 });
 
@@ -199,16 +214,27 @@ const PrePlan = () => {
                 onChange={(e) => setdestination(e.target.value)}
               />
             </Box>
-
-            <Button
-              variant="contained"
-              color="primary"
-              size="large"
-              className={classes.routbtn}
-              onClick={calculateRoute}
-            >
-              Calculate Route
-            </Button>
+            <ButtonGroup className={classes.buttons}>
+              <Button
+                variant="contained"
+                color="primary"
+                size="small"
+                className={classes.routbtn}
+                onClick={calculateRoute}
+              >
+                Calculate Route
+              </Button>
+              <Button
+                variant="contained"
+                color="secondary"
+                size="small"
+                className={classes.clearbtn}
+                rem
+                onClick={clearRoute}
+              >
+                Clear
+              </Button>
+            </ButtonGroup>
           </div>
         </Paper>
         <Paper className={classes.maprout}>
