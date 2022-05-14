@@ -136,7 +136,21 @@ export const newRoute = [
     routeId: "h3h3h3h3h3h",
     customerId: "2b2b2b-2b2b2b2",
     customerOrderNumber: "3333, 3333, 3333",
-    coords: { lat: 59.2043036, lng: 17.8301711 },
+    coords: { lat: 57.7072326, lng: 11.9670171 },
+    orders: [
+      {
+        name: "order 1",
+        x: 11.901739,
+        y: 57.773897,
+        address: "",
+      },
+      {
+        name: "order 2",
+        x: 11.916667,
+        y: 57.9,
+        address: "",
+      },
+    ],
   },
   {
     name: "Tunaskolan hemkunskap",
@@ -145,6 +159,20 @@ export const newRoute = [
     routeId: "h4h4h4h4h4h",
     customerId: "3b3b3b3b-3b3bb33b",
     customerOrderNumber: "2222, 2222, 2222",
-    coords: { lat: 59.20197659999999, lng: 17.8375996 },
+    coords: { lat: 57.7072326, lng: 11.9670171 },
+    orders: [
+      {
+        name: "order 3",
+        x: 12.083333,
+        y: 57.616667,
+        address: "",
+      },
+      {
+        name: "order 4",
+        x: 12.166667,
+        y: 57.466667,
+        address: "",
+      },
+    ],
   },
 ];
