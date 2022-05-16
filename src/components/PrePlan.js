@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useRef } from "react";
+import classNames from "classnames";
 import {
   Box,
   CircularProgress,
@@ -14,25 +15,20 @@ import {
   TableRow,
   Paper,
   FormControlLabel,
-  Tooltip,
   TextField,
   Button,
   Typography,
   IconButton,
+  Grid,
   ButtonGroup,
 } from "@material-ui/core";
 
-import {
-  BarChart,
-  AccountCircle,
-  CancelPresentation,
-} from "@material-ui/icons";
+import { BarChart, AccountCircle, ArrowDropDown } from "@material-ui/icons";
 import {
   useJsApiLoader,
   GoogleMap,
   Marker,
   DirectionsRenderer,
-  Autocomplete,
 } from "@react-google-maps/api";
 import { newRoute } from "../utils/data";
 import { makeStyles } from "@material-ui/core";
@@ -63,8 +59,8 @@ const useStyles = makeStyles({
     position: "absolute",
     top: "2%",
     left: "1%",
-    width: "300px",
-    height: "180px",
+    width: "260px",
+    height: "200px",
     alignItems: "center",
     display: "flex",
   },
@@ -84,11 +80,13 @@ const useStyles = makeStyles({
   },
   maprout: {
     position: "absolute",
-    top: "50%",
+    top: "55%",
     left: "1%",
-    width: "300px",
+    width: "260px",
     display: "flex",
     justifyContent: "space-evenly",
+
+    transition: "all linear 0.3s",
   },
   buttons: {
     display: "flex",
@@ -112,6 +110,7 @@ const PrePlan = () => {
   const [showAllOrders, setshowAllOrders] = useState(false);
   const [origin, setorigin] = useState("second");
   const [destination, setdestination] = useState("second");
+
   /** @type React.MutableRefObject<HTMLInputElement> */
   const originRef = useRef();
   /** @type React.MutableRefObject<HTMLInputElement> */
@@ -191,9 +190,10 @@ const PrePlan = () => {
             </>
           )}
         </GoogleMap>
+
         <Paper className={classes.modal}>
-          <div className={classes.modaldiv}>
-            <Box>
+          <Grid container direction="column" alignItems="center">
+            <Grid item xs={8} md={10}>
               <TextField
                 placeholder="Origin"
                 type={"text"}
@@ -202,8 +202,8 @@ const PrePlan = () => {
                 size="small"
                 onChange={(e) => setorigin(e.target.value)}
               />
-            </Box>
-            <Box>
+            </Grid>
+            <Grid item xs={8} md={10}>
               <TextField
                 placeholder="Destination"
                 type={"text"}
@@ -213,30 +213,32 @@ const PrePlan = () => {
                 className={classes.input}
                 onChange={(e) => setdestination(e.target.value)}
               />
-            </Box>
-            <ButtonGroup className={classes.buttons}>
-              <Button
-                variant="contained"
-                color="primary"
-                size="small"
-                className={classes.routbtn}
-                onClick={calculateRoute}
-              >
-                Calculate Route
-              </Button>
-              <Button
-                variant="contained"
-                color="secondary"
-                size="small"
-                className={classes.clearbtn}
-                rem
-                onClick={clearRoute}
-              >
-                Clear
-              </Button>
-            </ButtonGroup>
-          </div>
+            </Grid>
+            <Grid item xs={8} md={10}>
+              <ButtonGroup className={classes.buttons}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  size="small"
+                  className={classes.routbtn}
+                  onClick={calculateRoute}
+                >
+                  Calculate Route
+                </Button>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  size="small"
+                  className={classes.clearbtn}
+                  onClick={clearRoute}
+                >
+                  Clear
+                </Button>
+              </ButtonGroup>
+            </Grid>
+          </Grid>
         </Paper>
+
         <Paper className={classes.maprout}>
           <Typography variant="subtitle2">Distance: {distance}</Typography>
           <Typography variant="subtitle2">Duration: {duration}</Typography>
@@ -248,7 +250,7 @@ const PrePlan = () => {
   if (!isLoaded) {
     return <CircularProgress />;
   }
-  console.log(origin);
+
   const TableComponent = () => {
     return (
       <TableContainer component={Paper}>
@@ -257,7 +259,13 @@ const PrePlan = () => {
             <TableRow>
               <TableCell>
                 <FormControlLabel
-                  control={<Checkbox onClick={() => setshowAllOrders(true)} />}
+                  control={
+                    <Checkbox
+                      onChange={(e) => {
+                        setshowAllOrders(true);
+                      }}
+                    />
+                  }
                   label="All"
                 />
               </TableCell>
@@ -275,7 +283,6 @@ const PrePlan = () => {
                   <Checkbox
                     onChange={(e) => {
                       settourIndex(ind);
-                      e.target.checked = true;
                       setshowAllOrders(false);
                     }}
                   />
