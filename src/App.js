@@ -14,7 +14,7 @@ import {
   PrivateRoute,
   Home,
   UserPage,
-  Confirmation,
+  Confirmation
 } from "./pages";
 
 function App() {
@@ -31,6 +31,7 @@ function App() {
       console.log(error);
     }
   };
+
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       ({ coords: { latitude, longitude } }) => {

@@ -17,11 +17,12 @@ import { HiLocationMarker } from "react-icons/hi";
 import mapStyles from "../../../utils/mapStyles";
 import {
   addAddress,
-  getAddress,
+  getAddress
 } from "../../../redux-toolkit/order/orderSlice";
 // test
 import Geocode from "react-geocode";
 const SingelRestaurant = ({ coords }) => {
+  console.log(coords);
   const products = useSelector(getAllProducts);
   const { handleAddToCart, added, setAdded, business } = useProductsContext();
   const { id } = useParams();
@@ -41,9 +42,8 @@ const SingelRestaurant = ({ coords }) => {
   };
   useEffect(() => {
     reverseGeoCode();
-  });
-  console.log(coords);
-  // test
+  }, []);
+
   Geocode.setApiKey(process.env.REACT_APP_GOOGLEMAPS_API_KEY);
   Geocode.setRegion("se");
 
@@ -89,7 +89,7 @@ const SingelRestaurant = ({ coords }) => {
                   >
                     <GoogleMapReact
                       bootstrapURLKeys={{
-                        key: process.env.REACT_APP_GOOGLEMAPS_API_KEY,
+                        key: process.env.REACT_APP_GOOGLEMAPS_API_KEY
                       }}
                       defaultCenter={coords}
                       center={coords}
@@ -98,7 +98,7 @@ const SingelRestaurant = ({ coords }) => {
                       options={{
                         disableDefaultUI: true,
                         zoomControl: true,
-                        styles: mapStyles,
+                        styles: mapStyles
                       }}
                     >
                       <div
@@ -125,7 +125,7 @@ const SingelRestaurant = ({ coords }) => {
                       marginRight: "1rem",
                       color: "#f44336",
                       cursor: "pointer",
-                      fontSize: "1.2rem",
+                      fontSize: "1.2rem"
                     }}
                   />
                 </div>
@@ -133,13 +133,13 @@ const SingelRestaurant = ({ coords }) => {
                   style={{
                     display: "flex",
                     marginLeft: "1rem",
-                    alignItems: "center",
+                    alignItems: "center"
                   }}
                 >
                   <BsFillStarFill
                     style={{
                       color: "orange",
-                      marginRight: "0.4rem",
+                      marginRight: "0.4rem"
                     }}
                   />
                   <p style={{ fontSize: "0.8rem" }}>4.6/5 (10)</p>
@@ -148,7 +148,7 @@ const SingelRestaurant = ({ coords }) => {
                   style={{
                     display: "flex",
                     marginLeft: "1rem",
-                    alignItems: "center",
+                    alignItems: "center"
                   }}
                 >
                   <p style={{ opacity: "0.6", marginRight: "0.4rem" }}>
@@ -163,7 +163,7 @@ const SingelRestaurant = ({ coords }) => {
                     marginTop: "2rem",
                     maxWidth: "4rem",
                     marginLeft: "0.5rem",
-                    color: "#f44336",
+                    color: "#f44336"
                   }}
                 >
                   <MdRestaurantMenu /> Menu
@@ -198,7 +198,7 @@ const SingelRestaurant = ({ coords }) => {
                             <h4>{el.name}</h4>
                             <p
                               dangerouslySetInnerHTML={{
-                                __html: el.description,
+                                __html: el.description
                               }}
                             ></p>
                             <p>${el.price.raw}</p>

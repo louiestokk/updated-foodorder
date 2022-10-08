@@ -24,6 +24,7 @@
     "cookie-parser": "^1.4.6",
     "dotenv": "^10.0.0",
     "google-map-react": "^2.1.10",
+    "Json-server": "npm:json-server@^0.17.0",
     "netlify-cli": "^9.6.5",
     "node-sass": "^6.0.1",
     "nodemailer": "^6.7.2",
@@ -50,7 +51,8 @@
     "build": "CI= react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "netlify": "netlify dev"
+    "netlify": "netlify dev",
+    "server": "json-server --watch db.json"
   },
   "eslintConfig": {
     "extends": [
